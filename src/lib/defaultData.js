@@ -5,16 +5,16 @@ export function makeId() {
 export const DEFAULT_INVITATION = {
   theme: {
     preset: 'royal-ivory-gold',
-    primary: '#b8860b', // Royal Gold Foil
+    primary: '#b8860b', // 24K Royal Gold Foil
     accent: '#4a1525', // Deep Royal Maroon
     ink: '#fdfbf7', // Warm Luxury Ivory Cream
-    cardBg: '#ffffff', // Crisp White Card
+    cardBg: '#ffffff', // Crisp Fine Paper Card
     overlay: 'rgba(255, 252, 246, 0.92)',
-    fontPair: 'classic',
-    displayFont: "'Playfair Display', serif",
+    fontPair: 'royal-calligraphy',
+    displayFont: "'Cinzel', serif",
     bodyFont: "'Montserrat', sans-serif",
     bgImage: '',
-    borderStyle: 'ornate',
+    borderStyle: 'deckle-gold',
   },
   intro: {
     enabled: true,
@@ -89,6 +89,7 @@ export const DEFAULT_INVITATION = {
     venue: true,
     rsvp: true,
   },
+  sectionBackgrounds: {},
   hero: {
     auspiciousSymbol: 'ॐ',
     symbolText: '|| Shree Ganeshay Namah ||',
@@ -214,13 +215,13 @@ export const DEFAULT_INVITATION = {
         id: makeId(),
         title: 'Side by Side',
         caption: 'Walking hand in hand through every season toward our shared tomorrow.',
-        image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80',
       },
       {
         id: makeId(),
         title: 'Together Always',
         caption: 'Stepping into a lifetime filled with eternal smiles, dreams, and devotion.',
-        image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
       },
     ],
     quote: 'From that first beautiful conversation to a lifetime of togetherness.',
@@ -236,13 +237,13 @@ export const DEFAULT_INVITATION = {
       },
       {
         id: makeId(),
-        url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
-        caption: 'Golden Hour Memories',
+        url: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80',
+        caption: 'Bridal Grace in Silk',
       },
       {
         id: makeId(),
-        url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
-        caption: 'With Love & Grace',
+        url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+        caption: 'Sacred Henna & Bangles',
       },
     ],
   },

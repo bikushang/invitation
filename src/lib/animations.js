@@ -60,6 +60,15 @@ export const THEME_PRESETS = [
     overlay: 'rgba(255, 252, 246, 0.92)',
   },
   {
+    id: 'regal-navy-gold',
+    name: 'Royal Palace Navy & Gold',
+    primary: '#c49a45',
+    accent: '#1e293b',
+    ink: '#fbfaf7',
+    cardBg: '#ffffff',
+    overlay: 'rgba(251, 250, 247, 0.92)',
+  },
+  {
     id: 'crimson-sandalwood',
     name: 'Imperial Crimson & Sandalwood',
     primary: '#c28b24',
@@ -98,7 +107,8 @@ export const THEME_PRESETS = [
 ];
 
 export const FONT_PAIRS = [
-  { id: 'classic', name: 'Classic Serif & Modern', display: "'Playfair Display', serif", body: "'Montserrat', sans-serif" },
-  { id: 'elegant', name: 'Royal Cormorant & Sans', display: "'Cormorant Garamond', serif", body: "'Montserrat', sans-serif" },
-  { id: 'script', name: 'Great Vibes Calligraphy', display: "'Great Vibes', cursive", body: "'Cormorant Garamond', serif" },
+  { id: 'royal-cinzel', name: 'Cinzel Imperial & Montserrat', display: "'Cinzel', serif", body: "'Montserrat', sans-serif" },
+  { id: 'elegant', name: 'Royal Cormorant Garamond & Serif', display: "'Cormorant Garamond', serif", body: "'Montserrat', sans-serif" },
+  { id: 'classic', name: 'Playfair Display & Montserrat', display: "'Playfair Display', serif", body: "'Montserrat', sans-serif" },
+  { id: 'decorative', name: 'Cinzel Decorative & Royal Serif', display: "'Cinzel Decorative', serif", body: "'Montserrat', sans-serif" },
 ];

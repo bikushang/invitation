@@ -47,20 +47,21 @@ export default function CountdownSection({ data, update, anim }) {
   ];
 
   return (
-    <SectionShell data={data} sectionAnim={anim?.countdown || 'fade-up'}>
-      <div className="flex flex-col items-center text-center px-6 py-16 md:py-24">
-        <AnimatedText
-          as="h2"
-          text={cd.heading || 'Counting Down To Forever'}
-          animId={titleAnim}
-          style={{
-            fontFamily: theme.displayFont,
-            color: maroon,
-            fontSize: 'clamp(1.6rem, 4vw, 2.5rem)',
-            fontWeight: 600,
-          }}
-        />
-        <p className="mt-2 text-xs md:text-sm max-w-md uppercase tracking-[0.2em] font-medium" style={{ color: gold }}>
+    <SectionShell data={data} sectionKey="countdown" sectionAnim={anim?.countdown || 'fade-up'}>
+      <div className="flex flex-col items-center text-center px-4 sm:px-6 py-12 sm:py-20">
+        <p className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase" style={{ color: gold }}>
+          S A V E  T H E  D A T E
+        </p>
+        <h2
+          className="font-cinzel mt-2 text-2xl sm:text-4xl font-semibold tracking-wider uppercase"
+          style={{ color: maroon }}
+        >
+          <EditableText
+            value={cd.heading || 'Counting Down To Forever'}
+            onChange={(v) => set({ heading: v })}
+          />
+        </h2>
+        <p className="mt-1 text-xs md:text-sm max-w-md uppercase tracking-[0.2em] font-medium" style={{ color: gold }}>
           <EditableText
             value={cd.subtitle || 'Every passing second brings us closer to our forever'}
             onChange={(v) => set({ subtitle: v })}
@@ -69,28 +70,27 @@ export default function CountdownSection({ data, update, anim }) {
 
         <Divider color={gold} />
 
-        {/* Counter cards in Light Ivory & Gold */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-4 mt-4 max-w-xl w-full">
+        {/* Counter cards in Pristine Glass Cards */}
+        <div className="grid grid-cols-4 countdown-grid gap-2 sm:gap-4 mt-4 max-w-md w-full">
           {units.map((u) => (
             <div
               key={u.label}
-              className="flex flex-col items-center justify-center p-3 sm:p-5 rounded-xl border bg-white shadow-md transition-transform hover:-translate-y-1"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-2xl border bg-white/94 backdrop-blur-xs shadow-md transition-transform hover:-translate-y-1"
               style={{
                 borderColor: `${gold}55`,
-                boxShadow: '0 8px 20px -4px rgba(184, 134, 11, 0.15)',
+                boxShadow: '0 8px 20px -4px rgba(30, 41, 59, 0.1)',
               }}
             >
               <span
-                className="text-2xl sm:text-4xl md:text-5xl font-bold tabular-nums"
+                className="text-xl sm:text-3xl md:text-4xl font-bold tabular-nums font-serif"
                 style={{
                   color: maroon,
-                  fontFamily: theme.displayFont,
                 }}
               >
                 {String(u.val).padStart(2, '0')}
               </span>
               <span
-                className="mt-1 text-[10px] sm:text-xs uppercase tracking-widest font-semibold"
+                className="mt-1 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold"
                 style={{ color: gold }}
               >
                 {u.label}

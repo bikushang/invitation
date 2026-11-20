@@ -25,6 +25,7 @@ export default function ThemePanel({ data, update }) {
                     ink: p.ink,
                     cardBg: p.cardBg,
                     overlay: p.overlay,
+                    bgImage: p.bgImage || theme.bgImage,
                   })
                 }
                 className={`flex items-center justify-between rounded-lg border px-3 py-2 text-left transition cursor-pointer ${

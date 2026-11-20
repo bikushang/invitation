@@ -12,22 +12,22 @@ const CARICATURE_PRESETS = [
     id: 'punjabi-swag',
     title: 'Punjabi Dhol & Bhangra',
     category: 'Punjabi / Sikh',
-    url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+    url: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=600&q=80',
     description: 'Vibrant turban, festive chooda, and energetic celebration pose',
   },
   {
     id: 'south-silk',
     title: 'Temple Silk & Jasmine',
     category: 'South Indian',
-    url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
+    url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
     description: 'Pure Kanjeevaram silk saree with veshti and temple garlands',
   },
   {
     id: 'classic-romantic',
-    title: 'Golden Hour Silhouette',
+    title: 'Marigold Festive Bliss',
     category: 'Modern Minimalist',
-    url: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80',
-    description: 'Contemporary couple portrait surrounded by golden lights',
+    url: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80',
+    description: 'Indian wedding floral mandap & sacred vows ceremony',
   },
 ];
 

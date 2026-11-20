@@ -29,6 +29,14 @@ export default function ContentPanel({ data, update }) {
       {/* Hero */}
       <Section title="Hero Header">
         <div className="grid grid-cols-2 gap-3">
+          <Field label="Sacred Symbol (ॐ, ੴ, ﷽, ✝, 卐)">
+            <TextInput value={data.hero?.auspiciousSymbol} onChange={(v) => set('hero', { auspiciousSymbol: v })} placeholder="ॐ / ੴ / ﷽ / ✝" />
+          </Field>
+          <Field label="Invocation / Sacred Verse">
+            <TextInput value={data.hero?.symbolText} onChange={(v) => set('hero', { symbolText: v })} placeholder="|| श्री गणेशाय नमः ||" />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 gap-3 mt-3">
           <Field label="Monogram">
             <TextInput value={data.hero?.monogram} onChange={(v) => set('hero', { monogram: v })} />
           </Field>

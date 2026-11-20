@@ -31,41 +31,38 @@ export default function RsvpSection({ data, update, anim }) {
   }
 
   return (
-    <SectionShell data={data} sectionAnim={anim?.rsvp || 'blur-in'} bgImage={r.bgImage}>
-      <div className="flex flex-col items-center text-center px-6 py-20 md:py-32">
-        <AnimatedText
-          as="h2"
-          text={r.heading || 'RSVP'}
-          animId={titleAnim}
-          style={{ fontFamily: theme.displayFont, color: maroon, fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontWeight: 600 }}
-        />
-        <p className="mt-2 text-sm max-w-md" style={{ color: maroon, opacity: 0.85 }}>
-          <EditableText value={r.subtitle || 'Celebrate this new chapter with us.'} onChange={(v) => set({ subtitle: v })} multiline />
+    <SectionShell data={data} sectionKey="rsvp" sectionAnim={anim?.rsvp || 'blur-in'} bgImage={r.bgImage}>
+      <div className="flex flex-col items-center text-center px-4 sm:px-6 py-12 sm:py-20 max-w-xl mx-auto w-full">
+        <p className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase" style={{ color: gold }}>
+          R E S P O N D
+        </p>
+        <h2
+          className="font-cinzel mt-2 text-2xl sm:text-4xl font-semibold tracking-wider uppercase"
+          style={{ color: maroon }}
+        >
+          <EditableText value={r.heading || 'RSVP'} onChange={(v) => set({ heading: v })} />
+        </h2>
+        <p className="mt-1 text-xs sm:text-sm max-w-md opacity-85" style={{ color: maroon }}>
+          <EditableText value={r.subtitle || 'Celebrate this new chapter of love with us.'} onChange={(v) => set({ subtitle: v })} multiline />
         </p>
         <Divider color={gold} />
 
-        <AnimatedText
-          as="p"
-          text={r.closingQuote || 'Two souls with but a single thought, two hearts that beat as one.'}
-          animId={titleAnim}
-          className="mt-6 italic max-w-xl text-sm sm:text-base"
-          style={{ fontFamily: theme.displayFont, color: maroon, opacity: 0.9 }}
-        />
+        <p
+          className="font-cinzel text-xl sm:text-2xl font-bold tracking-widest mt-2 uppercase"
+          style={{ color: gold }}
+        >
+          <EditableText
+            value={r.coupleLine || `${data.hero?.groomName || 'Anmol'} & ${data.hero?.brideName || 'Radhika'}`}
+            onChange={(v) => set({ coupleLine: v })}
+          />
+        </p>
 
-        <AnimatedText
-          as="p"
-          text={r.coupleLine || `${data.hero?.groomName || 'Anmol'} & ${data.hero?.brideName || 'Radhika'}`}
-          animId={titleAnim}
-          className="mt-6"
-          style={{ fontFamily: "'Great Vibes', cursive", color: maroon, fontSize: 'clamp(2.4rem, 6vw, 3.8rem)' }}
-        />
-
-        {/* RSVP Card Form in Light Ivory & Gold */}
+        {/* RSVP Card Form in Pristine Fine Paper Card */}
         <div
-          className="mt-8 w-full max-w-md p-6 sm:p-8 rounded-2xl border bg-white shadow-xl"
+          className="mt-6 w-full max-w-md p-6 sm:p-8 rounded-3xl border bg-white/94 backdrop-blur-md shadow-2xl"
           style={{
             borderColor: `${gold}55`,
-            boxShadow: '0 15px 35px -10px rgba(74, 21, 37, 0.1), 0 0 0 1px rgba(184, 134, 11, 0.15)',
+            boxShadow: '0 20px 45px -10px rgba(30, 41, 59, 0.15), 0 0 0 1px rgba(184, 134, 11, 0.2)',
           }}
         >
           {submitted ? (

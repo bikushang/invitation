@@ -11,7 +11,7 @@ export default function HeroSection({ data, update, anim }) {
   const set = (patch) => update('hero', patch);
 
   return (
-    <SectionShell data={data} sectionAnim={heroAnim} bgImage={h.bgImage}>
+    <SectionShell data={data} sectionKey="hero" sectionAnim={heroAnim} bgImage={h.bgImage}>
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-16">
         {/* Auspicious Invocation Header */}
         <div className="mb-3">
@@ -28,17 +28,16 @@ export default function HeroSection({ data, update, anim }) {
 
         {/* Golden Royal Monogram Crest */}
         <div
-          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 flex flex-col items-center justify-center shadow-lg my-2 seal-pulse bg-white"
+          className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 flex flex-col items-center justify-center shadow-lg my-2 seal-pulse bg-white/90 backdrop-blur-xs"
           style={{
             borderColor: gold,
             boxShadow: `0 8px 25px -5px rgba(184, 134, 11, 0.25)`,
           }}
         >
           <span
+            className="font-cinzel font-bold text-2xl sm:text-3xl"
             style={{
-              fontFamily: "'Great Vibes', cursive",
               color: maroon,
-              fontSize: '2.5rem',
               lineHeight: 1,
             }}
           >
@@ -50,7 +49,7 @@ export default function HeroSection({ data, update, anim }) {
         </div>
 
         {/* Subtitle */}
-        <div className="mt-4" style={{ color: gold, letterSpacing: '0.3em', fontSize: '0.75rem', fontWeight: 600 }}>
+        <div className="mt-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.32em]" style={{ color: gold }}>
           <EditableText
             value={h.subtitle || 'WE ARE GETTING MARRIED'}
             onChange={(v) => set({ subtitle: v })}
@@ -80,16 +79,15 @@ export default function HeroSection({ data, update, anim }) {
 
         <Divider color={gold} />
 
-        {/* Couple Names - Both Directly Editable and Beautiful */}
+        {/* Couple Names - Breathtaking Imperial Serif */}
         <div className="my-2">
           <h1
-            className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-5"
-            style={{ fontFamily: theme.displayFont }}
+            className="flex flex-wrap items-baseline justify-center gap-x-2 sm:gap-x-4"
           >
             <span
+              className="font-cinzel tracking-wider font-bold"
               style={{
-                fontSize: 'clamp(2.5rem, 6.5vw, 4.8rem)',
-                fontWeight: 600,
+                fontSize: 'clamp(2.4rem, 6.5vw, 4.4rem)',
                 color: maroon,
                 lineHeight: 1.1,
               }}
@@ -100,10 +98,11 @@ export default function HeroSection({ data, update, anim }) {
               />
             </span>
             <span
+              className="font-serif italic font-normal"
               style={{
-                fontFamily: "'Great Vibes', cursive",
                 color: gold,
-                fontSize: 'clamp(1.8rem, 4.5vw, 3rem)',
+                fontSize: 'clamp(1.6rem, 4vw, 2.6rem)',
+                margin: '0 0.25rem',
               }}
             >
               <EditableText
@@ -112,9 +111,9 @@ export default function HeroSection({ data, update, anim }) {
               />
             </span>
             <span
+              className="font-cinzel tracking-wider font-bold"
               style={{
-                fontSize: 'clamp(2.5rem, 6.5vw, 4.8rem)',
-                fontWeight: 600,
+                fontSize: 'clamp(2.4rem, 6.5vw, 4.4rem)',
                 color: maroon,
                 lineHeight: 1.1,
               }}
@@ -127,7 +126,16 @@ export default function HeroSection({ data, update, anim }) {
           </h1>
         </div>
 
-        {/* Tagline / Save the Date */}
+        {/* Date in Pristine Translucent Pill */}
+        <div
+          className="mt-4 inline-block px-6 py-2 rounded-full border text-xs sm:text-sm font-semibold tracking-[0.2em] shadow-sm bg-white/90 backdrop-blur-xs"
+          style={{
+            borderColor: `${gold}66`,
+            color: maroon,
+          }}
+        >
+          <EditableText value={h.date || '21st November, 2026'} onChange={(v) => set({ date: v })} />
+        </div>
         <div
           className="mt-6 inline-block px-5 py-1.5 rounded-full border text-xs uppercase tracking-[0.25em] font-semibold"
           style={{

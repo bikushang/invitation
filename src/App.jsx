@@ -67,6 +67,9 @@ export default function App() {
   // Cover Page State: whether the envelope/cover is open or closed
   const [coverOpen, setCoverOpen] = useState(false);
 
+  // Active section for background customization
+  const [activeBgSec, setActiveBgSec] = useState(null);
+
   // Viewport mode: 'mobile' vs 'desktop'
   const [canvasViewMode, setCanvasViewMode] = useState('mobile');
   const [fullPreviewViewMode, setFullPreviewViewMode] = useState('desktop');
@@ -108,27 +111,36 @@ export default function App() {
 
   // Apply Cultural Tradition Preset
   function applyTradition(tradition) {
+    if (!tradition) return;
+
     const newSeparateEvents = {};
     const newEventKeys = [];
+    const newVisibility = {};
 
     (tradition.events || []).forEach((ev, idx) => {
-      const cleanName = (ev.name || 'ceremony').toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 12);
+      const cleanName = (ev.name || 'ceremony').toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 15);
       const key = `event_${cleanName}_${idx}`;
       newSeparateEvents[key] = {
         name: ev.name,
-        badge: ev.name?.split(' ')[0] || 'Ceremony',
-        subtitle: ev.subtitle,
-        date: ev.date,
-        time: ev.time,
+        badge: ev.badge || ev.name?.split(' ')[0] || 'Ceremony',
+        motif: ev.motif || '✦ SACRED CELEBRATION ✦',
+        subtitle: ev.subtitle || '',
+        date: ev.date || '',
+        time: ev.time || '',
         venueLabel: ev.venueLabel || 'Venue',
-        venue: ev.venue,
-        location: ev.location,
+        venue: ev.venue || '',
+        location: ev.location || '',
         dressCode: ev.dressCode || 'Attire: Traditional Festive Wear',
+        accent: ev.accent || tradition.theme?.accent || '#b8860b',
+        bgTint: ev.bgTint || 'linear-gradient(180deg, #fffcf5 0%, #fff9e8 50%, #fff3d6 100%)',
+        cardBorder: ev.cardBorder || tradition.theme?.primary || '#d4af37',
       };
       newEventKeys.push(key);
+      newVisibility[key] = true;
     });
 
     setData((prev) => {
+      // Rebuild sectionsOrder with new event keys placed cleanly right after 'families'
       const baseSections = (prev.sectionsOrder || DEFAULT_INVITATION.sectionsOrder).filter(
         (s) => !s.startsWith('event_') && s !== 'schedule'
       );
@@ -141,25 +153,71 @@ export default function App() {
 
       return {
         ...prev,
+        // 1. Intro / Cover Page - Full Cultural Transformation
+        intro: {
+          ...prev.intro,
+          title: tradition.intro?.title || prev.intro?.title,
+          subtitle: tradition.intro?.subtitle || prev.intro?.subtitle,
+          waxSealText: tradition.intro?.waxSealText || prev.intro?.waxSealText,
+        },
+        // 2. Hero Section - Sacred Invocations & Sanskrit/Gurbani/Arabic/Scripture
         hero: {
           ...prev.hero,
-          auspiciousSymbol: tradition.auspiciousSymbol,
-          symbolText: tradition.symbolText,
-          closingLine: tradition.closingLine,
+          auspiciousSymbol: tradition.hero?.auspiciousSymbol || prev.hero?.auspiciousSymbol,
+          symbolText: tradition.hero?.symbolText || prev.hero?.symbolText,
+          subtitle: tradition.hero?.subtitle || prev.hero?.subtitle,
+          closingLine: tradition.hero?.closingLine || prev.hero?.closingLine,
         },
+        // 3. Families Section - Cultural Groom/Bride Honorifics (Sardar, Kunwar, Janab, etc.)
+        families: {
+          ...prev.families,
+          intro: tradition.families?.intro || prev.families?.intro,
+          heading: tradition.families?.heading || prev.families?.heading,
+          groom: {
+            ...prev.families?.groom,
+            label: tradition.families?.groomLabel || prev.families?.groom?.label,
+          },
+          bride: {
+            ...prev.families?.bride,
+            label: tradition.families?.brideLabel || prev.families?.bride?.label,
+          },
+          closingLine: tradition.families?.closingLine || prev.families?.closingLine,
+        },
+        // 4. Countdown Section - Tradition-specific Heading
+        countdown: {
+          ...prev.countdown,
+          heading: tradition.countdown?.heading || prev.countdown?.heading,
+          subtitle: tradition.countdown?.subtitle || prev.countdown?.subtitle,
+        },
+        // 5. Story Section - Authentic Cultural Scriptures
         story: {
           ...prev.story,
-          quote: tradition.quote,
+          quote: tradition.story?.quote || prev.story?.quote,
         },
+        // 6. RSVP Section - Tradition-specific blessing quote
+        rsvp: {
+          ...prev.rsvp,
+          closingQuote: tradition.rsvp?.closingQuote || prev.rsvp?.closingQuote,
+        },
+        // 7. Standalone Events - Authentic Ceremonies with Motifs & Colors
         separateEvents: newSeparateEvents,
         sectionsOrder: Array.from(new Set(baseSections)),
+        sectionVisibility: {
+          ...(prev.sectionVisibility || {}),
+          ...newVisibility,
+        },
+        // 8. Theme - Pure Royal Ivory & Gold Palette
         theme: {
           ...prev.theme,
           ...tradition.theme,
         },
       };
     });
-    showToast(`Applied ${tradition.name} tradition!`);
+
+    // Reset cover to closed so user immediately sees the transformed cover & wax seal
+    setCoverOpen(false);
+    setRevealKey((k) => k + 1);
+    showToast(`Applied ${tradition.name} tradition! Transformed cover, symbols, ceremonies & colors.`);
   }
 
   // Replay: ALWAYS close the cover page and replay animations
@@ -331,34 +389,47 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 gap-2.5">
-                {CULTURAL_TRADITIONS.map((trad) => (
-                  <button
-                    key={trad.id}
-                    type="button"
-                    onClick={() => applyTradition(trad)}
-                    className="p-3 rounded-xl border border-stone-200 hover:border-amber-700 bg-white text-left transition hover:shadow-xs group cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-stone-900 group-hover:text-amber-900">
-                        {trad.name}
-                      </span>
-                      <span className="text-sm font-serif text-amber-800 font-bold">
-                        {trad.auspiciousSymbol}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-stone-500 mt-0.5">{trad.subtitle}</p>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {trad.events.slice(0, 3).map((e) => (
-                        <span key={e.name} className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] text-stone-600">
-                          {e.name.split(' ')[0]}
+                {CULTURAL_TRADITIONS.map((trad) => {
+                  const symbol = trad.hero?.auspiciousSymbol || trad.intro?.waxSealText || '✦';
+                  const isCurrent = data.hero?.auspiciousSymbol === symbol;
+                  return (
+                    <button
+                      key={trad.id}
+                      type="button"
+                      onClick={() => applyTradition(trad)}
+                      className={`p-3.5 rounded-xl border text-left transition hover:shadow-md group cursor-pointer ${
+                        isCurrent
+                          ? 'border-amber-700 bg-amber-50/60 ring-2 ring-amber-600/30 shadow-xs'
+                          : 'border-stone-200 hover:border-amber-700 bg-white'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-stone-900 group-hover:text-amber-900 flex items-center gap-2">
+                          <span>{trad.name}</span>
+                          {isCurrent && (
+                            <span className="text-[10px] font-semibold text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded-full">
+                              Active
+                            </span>
+                          )}
                         </span>
-                      ))}
-                      <span className="px-1.5 py-0.5 rounded bg-amber-50 text-[10px] text-amber-900 font-medium">
-                        +{trad.events.length - 3} more
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                        <span className="text-base font-serif text-amber-800 font-bold px-1.5 py-0.5 rounded-md bg-amber-100/50">
+                          {symbol}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-stone-500 mt-0.5">{trad.subtitle}</p>
+                      <div className="mt-2.5 flex flex-wrap gap-1">
+                        {trad.events.slice(0, 3).map((e) => (
+                          <span key={e.name} className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] text-stone-600">
+                            {e.name.split(' ')[0]}
+                          </span>
+                        ))}
+                        <span className="px-1.5 py-0.5 rounded bg-amber-50 text-[10px] text-amber-900 font-medium">
+                          +{trad.events.length - 3} more
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -367,7 +438,13 @@ export default function App() {
           {tab === 'ai-tools' && <AiToolsPanel data={data} update={update} onToast={showToast} />}
           {tab === 'intro' && <IntroPanel data={data} update={update} onReplayIntro={handleReplay} />}
           {tab === 'theme' && <ThemePanel data={data} update={themeUpdate} />}
-          {tab === 'sections' && <SectionsPanel data={data} update={update} />}
+          {tab === 'sections' && (
+            <SectionsPanel
+              data={data}
+              update={update}
+              initialActiveSec={activeBgSec}
+            />
+          )}
         </div>
 
         {/* Footer Actions */}
@@ -500,7 +577,7 @@ export default function App() {
                 </div>
               </div>
               {/* Internal Smooth Mobile Scroll Viewport */}
-              <div className="flex-1 overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
+              <div className="flex-1 min-h-0 overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
                 <InvitationPreview
                   data={data}
                   update={update}
@@ -509,6 +586,11 @@ export default function App() {
                   isEditor={true}
                   coverOpen={coverOpen}
                   onCoverOpenChange={setCoverOpen}
+                  isMobile={true}
+                  onCustomizeSectionBg={(secKey) => {
+                    setTab('sections');
+                    setActiveBgSec(secKey);
+                  }}
                 />
               </div>
               {/* Bottom Home Bar */}
@@ -527,6 +609,11 @@ export default function App() {
                 isEditor={true}
                 coverOpen={coverOpen}
                 onCoverOpenChange={setCoverOpen}
+                isMobile={false}
+                onCustomizeSectionBg={(secKey) => {
+                  setTab('sections');
+                  setActiveBgSec(secKey);
+                }}
               />
             </div>
           )}
@@ -595,7 +682,7 @@ export default function App() {
                     <div className="w-2 h-2 bg-blue-900/60 rounded-full" />
                   </div>
                 </div>
-                <div className="flex-1 overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
+                <div className="flex-1 min-h-0 overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
                   <InvitationPreview
                     data={data}
                     update={update}
@@ -604,6 +691,7 @@ export default function App() {
                     isEditor={false}
                     coverOpen={coverOpen}
                     onCoverOpenChange={setCoverOpen}
+                    isMobile={true}
                   />
                 </div>
                 <div className="h-5 bg-[#292524] flex items-center justify-center shrink-0">
@@ -620,6 +708,7 @@ export default function App() {
                   isEditor={false}
                   coverOpen={coverOpen}
                   onCoverOpenChange={setCoverOpen}
+                  isMobile={false}
                 />
               </div>
             )}

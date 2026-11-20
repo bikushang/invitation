@@ -79,16 +79,16 @@ export default function Viewer({ slug }) {
       </div>
 
       {/* Main Container */}
-      <div className="w-full flex-1 flex justify-center items-start py-4 sm:py-8 px-2 sm:px-6">
+      <div className="w-full flex-1 flex justify-center items-start py-0 sm:py-8 px-0 sm:px-6">
         {viewMode === 'mobile' ? (
-          /* Proper mobile phone preview container with internal scroll */
-          <div className="w-full sm:w-[375px] max-w-[95vw] h-screen sm:h-[720px] sm:max-h-[calc(100vh-140px)] sm:phone-bezel relative flex flex-col shadow-2xl bg-[#fdfbf7]">
+          /* Mobile phone simulator on desktop, edge-to-edge native on actual mobile */
+          <div className="w-full sm:w-[375px] max-w-full sm:max-w-[95vw] min-h-screen sm:min-h-0 sm:h-[740px] sm:max-h-[calc(100vh-140px)] sm:phone-bezel relative flex flex-col shadow-none sm:shadow-2xl bg-[#fdfbf7]">
             <div className="hidden sm:flex h-6 bg-[#292524] items-center justify-center shrink-0">
               <div className="w-24 h-3.5 bg-black rounded-full flex items-center justify-end px-2">
                 <div className="w-2 h-2 bg-blue-900/60 rounded-full" />
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
+            <div className="flex-1 sm:min-h-0 sm:overflow-y-auto builder-scroll overscroll-contain bg-[#fdfbf7] relative">
               <InvitationPreview
                 data={data}
                 update={() => {}}
@@ -97,6 +97,7 @@ export default function Viewer({ slug }) {
                 isEditor={false}
                 coverOpen={coverOpen}
                 onCoverOpenChange={setCoverOpen}
+                isMobile={true}
               />
             </div>
             <div className="hidden sm:flex h-5 bg-[#292524] items-center justify-center shrink-0">
@@ -113,6 +114,7 @@ export default function Viewer({ slug }) {
               isEditor={false}
               coverOpen={coverOpen}
               onCoverOpenChange={setCoverOpen}
+              isMobile={false}
             />
           </div>
         )}

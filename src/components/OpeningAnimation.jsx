@@ -63,79 +63,83 @@ export default function OpeningAnimation({ data, onOpen, isOpen }) {
 
   return (
     <div
-      className={`w-full min-h-[85vh] sm:min-h-screen flex items-center justify-center p-4 sm:p-8 transition-all duration-700 ${
+      className={`w-full min-h-[85vh] sm:min-h-screen flex items-center justify-center p-4 sm:p-8 transition-all duration-700 relative overflow-hidden ${
         opening ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
       }`}
       style={{
-        background: 'linear-gradient(150deg, #fdfbf7 0%, #f7f0e3 50%, #eee3ce 100%)',
+        background: 'radial-gradient(ellipse at 50% 35%, #fffefb 0%, #faf5ec 55%, #f2e5ce 100%)',
       }}
     >
-      {/* Royal Ivory & Gold Envelope Card */}
+      {/* Delicate Royal Ivory Gold Shimmer Texture */}
+      <div className="absolute inset-0 royal-ivory-pattern pointer-events-none opacity-60" />
+
+      {/* Royal Destination Farman Envelope Card */}
       <div
-        className="relative w-full max-w-[430px] rounded-3xl shadow-2xl border-2 bg-white flex flex-col justify-between p-6 sm:p-10 text-center transition-all"
+        className="relative w-full max-w-[400px] rounded-3xl shadow-2xl border-2 bg-white flex flex-col justify-between p-6 sm:p-9 text-center transition-all z-10"
         style={{
           borderColor: goldColor,
-          backgroundImage: 'radial-gradient(circle at 50% 15%, rgba(184,134,11,0.06) 0%, transparent 60%)',
-          boxShadow: '0 25px 60px -12px rgba(74, 21, 37, 0.2), 0 0 0 1px rgba(184, 134, 11, 0.3)',
+          backgroundImage: 'radial-gradient(circle at 50% 12%, rgba(184, 134, 11, 0.05) 0%, transparent 70%)',
+          boxShadow: '0 25px 60px -12px rgba(74, 21, 37, 0.18), 0 0 0 1px rgba(184, 134, 11, 0.35)',
         }}
       >
-        {/* Double Ornate Gold Frame Border */}
+        {/* Ornate Gold Border & Corner Accents */}
         <div
-          className="absolute inset-3 rounded-2xl border border-dashed pointer-events-none"
+          className="absolute inset-2.5 rounded-2xl border border-dashed pointer-events-none"
           style={{ borderColor: `${goldColor}55` }}
         />
-        <div
-          className="absolute inset-4 rounded-xl border pointer-events-none"
-          style={{ borderColor: `${goldColor}33` }}
-        />
+        <span className="absolute top-3 left-4 text-xs font-serif select-none opacity-50" style={{ color: goldColor }}>❧</span>
+        <span className="absolute top-3 right-4 text-xs font-serif select-none opacity-50" style={{ color: goldColor }}>☙</span>
 
         {/* Top Header Section */}
         <div className="relative z-10 pt-1">
-          <div className="text-2xl sm:text-3xl font-serif mb-1" style={{ color: goldColor }}>
-            ॐ
+          <div className="text-2xl sm:text-3xl font-serif mb-0.5" style={{ color: goldColor }}>
+            {hero.auspiciousSymbol || 'ॐ'}
           </div>
+          <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.28em] uppercase" style={{ color: goldColor }}>
+            {hero.symbolText || '|| श्री गणेशाय नमः ||'}
+          </p>
           <span
-            className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-bold"
-            style={{ color: goldColor }}
+            className="block text-[11px] sm:text-xs tracking-[0.25em] uppercase font-bold mt-2"
+            style={{ color: maroonColor }}
           >
             {title}
           </span>
           <p
-            className="mt-1.5 text-xs sm:text-sm italic px-2 font-serif"
-            style={{ color: maroonColor, fontFamily: theme.displayFont }}
+            className="mt-1 text-xs italic px-2 font-serif opacity-80"
+            style={{ color: maroonColor }}
           >
             {subtitle}
           </p>
         </div>
 
-        {/* Center Couple Names & Monogram */}
-        <div className="relative z-10 my-6 py-2">
+        {/* Center Couple Names in Sweeping Imperial Serif */}
+        <div className="relative z-10 my-5 py-1">
           <div
-            className="text-4xl sm:text-5xl font-normal leading-tight"
-            style={{ fontFamily: "'Great Vibes', cursive", color: maroonColor }}
+            className="font-cinzel text-3xl sm:text-4xl font-bold tracking-wider uppercase leading-tight"
+            style={{ color: maroonColor }}
           >
             {groom}
           </div>
-          <div className="flex items-center justify-center gap-3 my-1.5">
-            <span className="h-px w-10 sm:w-14 bg-amber-600/40" />
+          <div className="flex items-center justify-center gap-2 my-1">
+            <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(90deg, transparent, ${goldColor})` }} />
             <span
-              className="text-xs sm:text-sm uppercase tracking-widest font-serif font-bold"
+              className="font-serif italic text-sm sm:text-base font-medium"
               style={{ color: goldColor }}
             >
               weds
             </span>
-            <span className="h-px w-10 sm:w-14 bg-amber-600/40" />
+            <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(90deg, ${goldColor}, transparent)` }} />
           </div>
           <div
-            className="text-4xl sm:text-5xl font-normal leading-tight"
-            style={{ fontFamily: "'Great Vibes', cursive", color: maroonColor }}
+            className="font-cinzel text-3xl sm:text-4xl font-bold tracking-wider uppercase leading-tight"
+            style={{ color: maroonColor }}
           >
             {bride}
           </div>
 
           <div
-            className="mt-3.5 text-xs tracking-[0.25em] uppercase font-bold"
-            style={{ color: goldColor }}
+            className="mt-3 inline-block px-4 py-1 rounded-full text-[11px] tracking-[0.2em] uppercase font-semibold border bg-white/80"
+            style={{ borderColor: `${goldColor}55`, color: maroonColor }}
           >
             {dateText}
           </div>
@@ -158,7 +162,7 @@ export default function OpeningAnimation({ data, onOpen, isOpen }) {
         </div>
 
         {/* Interactive Wax Seal Stamp & Big Open Button */}
-        <div className="relative z-20 pb-1 flex flex-col items-center gap-4">
+        <div className="relative z-20 pb-1 flex flex-col items-center gap-3.5">
           {/* Royal Wax Seal (Clickable) */}
           <button
             type="button"
@@ -167,20 +171,21 @@ export default function OpeningAnimation({ data, onOpen, isOpen }) {
             title="Click to Open Invitation"
           >
             <div
-              className="w-20 h-20 sm:w-22 sm:h-22 rounded-full flex items-center justify-center seal-pulse shadow-xl"
+              className="w-18 h-18 sm:w-20 sm:h-20 rounded-full flex items-center justify-center seal-pulse shadow-xl"
               style={{
-                background: 'radial-gradient(circle at 35% 35%, #7a1f33 0%, #4a1525 70%, #2e0915 100%)',
-                border: `2px solid ${goldColor}`,
+                background: 'radial-gradient(circle at 35% 35%, #946914 0%, #b8860b 60%, #6e4c12 100%)',
+                border: '2px solid #ffffff',
+                boxShadow: '0 8px 25px rgba(184, 134, 11, 0.45)',
               }}
             >
-              <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full border border-yellow-300/40 flex flex-col items-center justify-center text-center shadow-inner">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-yellow-200/50 flex flex-col items-center justify-center text-center shadow-inner">
                 <span
-                  className="text-base sm:text-lg font-bold tracking-wider"
-                  style={{ fontFamily: "'Playfair Display', serif", color: '#fbf5e8' }}
+                  className="text-base sm:text-lg font-bold font-cinzel"
+                  style={{ color: '#ffffff' }}
                 >
                   {waxText}
                 </span>
-                <Sparkles size={11} className="text-amber-300 mt-0.5 animate-spin" />
+                <Sparkles size={11} className="text-yellow-200 mt-0.5 animate-spin" />
               </div>
             </div>
           </button>
@@ -189,11 +194,11 @@ export default function OpeningAnimation({ data, onOpen, isOpen }) {
           <button
             type="button"
             onClick={handleOpen}
-            className="w-full max-w-[260px] py-3 px-6 rounded-full text-xs font-bold tracking-widest uppercase shadow-md transition-all transform hover:scale-105 hover:shadow-lg active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full max-w-[260px] py-3 px-6 rounded-full text-xs font-bold tracking-[0.2em] uppercase shadow-lg transition-all transform hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer flex items-center justify-center gap-2"
             style={{
               background: `linear-gradient(135deg, ${goldColor}, #8c6507)`,
               color: '#ffffff',
-              boxShadow: '0 4px 15px rgba(184, 134, 11, 0.35)',
+              boxShadow: '0 6px 20px rgba(184, 134, 11, 0.4)',
             }}
           >
             <Sparkles size={14} className="text-yellow-200" />

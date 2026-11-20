@@ -11,7 +11,7 @@ import RsvpSection from './sections/RsvpSection';
 import OpeningAnimation from './OpeningAnimation';
 import ParticlesEffect from './ParticlesEffect';
 import MusicPlayer from './MusicPlayer';
-import { ChevronUp, ChevronDown, Eye, EyeOff } from 'lucide-react';
+import { ChevronUp, ChevronDown, Eye, EyeOff, Paintbrush } from 'lucide-react';
 import { DEFAULT_INVITATION } from '../lib/defaultData';
 
 export default function InvitationPreview({
@@ -22,6 +22,8 @@ export default function InvitationPreview({
   isEditor = false,
   coverOpen = false,
   onCoverOpenChange,
+  isMobile = false,
+  onCustomizeSectionBg,
 }) {
   const [internalCoverOpen, setInternalCoverOpen] = useState(coverOpen);
 
@@ -43,7 +45,7 @@ export default function InvitationPreview({
     theme.ink.startsWith('#3a');
 
   const containerBg = isDark ? '#fdfbf7' : theme.ink;
-  const textColor = isDark ? '#4a1525' : theme.accent || '#4a1525';
+  const textColor = isDark ? '#1e293b' : theme.accent || '#1e293b';
 
   const sectionsOrder = data.sectionsOrder || DEFAULT_INVITATION.sectionsOrder;
   const visibility = data.sectionVisibility || {};
@@ -83,33 +85,34 @@ export default function InvitationPreview({
           data={data}
           update={update}
           anim={anim}
+          isMobile={isMobile}
         />
       );
     } else {
       switch (key) {
         case 'hero':
-          component = <HeroSection data={data} update={update} anim={anim} />;
+          component = <HeroSection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'countdown':
-          component = <CountdownSection data={data} update={update} anim={anim} />;
+          component = <CountdownSection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'families':
-          component = <FamiliesSection data={data} update={update} anim={anim} />;
+          component = <FamiliesSection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'story':
-          component = <StorySection data={data} update={update} anim={anim} />;
+          component = <StorySection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'schedule':
           // Purged in favor of separate standalone EventSection instances
           return null;
         case 'gallery':
-          component = <GallerySection data={data} update={update} anim={anim} />;
+          component = <GallerySection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'venue':
-          component = <VenueMapSection data={data} update={update} anim={anim} />;
+          component = <VenueMapSection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         case 'rsvp':
-          component = <RsvpSection data={data} update={update} anim={anim} />;
+          component = <RsvpSection data={data} update={update} anim={anim} isMobile={isMobile} />;
           break;
         default:
           return null;
@@ -142,6 +145,15 @@ export default function InvitationPreview({
             >
               <ChevronDown size={14} />
             </button>
+            {onCustomizeSectionBg && (
+              <button
+                onClick={() => onCustomizeSectionBg(key)}
+                className="p-1 hover:bg-stone-800 rounded text-amber-300 hover:text-amber-200 cursor-pointer"
+                title="Change section background (Color / Gradient / Image)"
+              >
+                <Paintbrush size={14} />
+              </button>
+            )}
             <button
               onClick={() => toggleVisibility(key)}
               className="p-1 hover:bg-stone-800 rounded text-stone-300 hover:text-white cursor-pointer"
@@ -158,7 +170,7 @@ export default function InvitationPreview({
 
   return (
     <div
-      className="relative w-full min-h-screen"
+      className={`relative w-full min-h-screen ${isMobile ? 'is-mobile-view' : ''}`}
       style={{
         backgroundColor: containerBg,
         color: textColor,

@@ -35,6 +35,14 @@ export function sanitizeInvitationData(data) {
     copy.theme.cardBg = '#ffffff';
     copy.theme.overlay = 'rgba(255, 252, 246, 0.92)';
     copy.theme.preset = 'royal-ivory-gold';
+    copy.theme.displayFont = "'Cinzel', serif";
+    copy.theme.bgImage = '';
+  }
+  if (copy.theme.bgImage && copy.theme.bgImage.includes('lake_como')) {
+    copy.theme.bgImage = '';
+  }
+  if (!copy.theme.displayFont || copy.theme.displayFont.includes('Playfair')) {
+    copy.theme.displayFont = "'Cinzel', serif";
   }
   if (!copy.separateEvents) {
     copy.separateEvents = { ...DEFAULT_INVITATION.separateEvents };
@@ -83,6 +91,40 @@ export function sanitizeInvitationData(data) {
       }
     });
   }
+
+  if (!copy.sectionBackgrounds) {
+    copy.sectionBackgrounds = {};
+  }
+
+  // Auto-upgrade any legacy foreign wedding photos to authentic Indian wedding photos
+  if (copy.story?.items) {
+    copy.story.items = copy.story.items.map((it) => {
+      if (it.image && (it.image.includes('1519741497674') || it.image.includes('1511285560929'))) {
+        return {
+          ...it,
+          image: it.image.includes('1519741497674')
+            ? 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+        };
+      }
+      return it;
+    });
+  }
+
+  if (copy.gallery?.photos) {
+    copy.gallery.photos = copy.gallery.photos.map((p) => {
+      if (p.url && (p.url.includes('1519741497674') || p.url.includes('1511285560929'))) {
+        return {
+          ...p,
+          url: p.url.includes('1519741497674')
+            ? 'https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+        };
+      }
+      return p;
+    });
+  }
+
   return copy;
 }
 

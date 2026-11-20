@@ -1,5 +1,7 @@
-function SectionShell({ data, sectionAnim, children, bgImage, className = '' }) {
-  const theme = data.theme || {};
+function SectionShell({ data, sectionKey, sectionAnim, children, bgImage, className = '', style = {} }) {
+  const theme = data?.theme || {};
+  const secBg = (sectionKey && data?.sectionBackgrounds?.[sectionKey]) || {};
+
   const isDark =
     !theme.ink ||
     theme.ink.startsWith('#0') ||
@@ -7,34 +9,68 @@ function SectionShell({ data, sectionAnim, children, bgImage, className = '' }) 
     theme.ink.startsWith('#2') ||
     theme.ink.startsWith('#3a');
 
-  const bgColor = isDark ? '#fdfbf7' : theme.ink;
+  const defaultBgColor = isDark ? '#fdfbf7' : theme.ink;
   const textColor = isDark ? '#4a1525' : theme.accent || '#4a1525';
   const goldColor = theme.primary || '#b8860b';
+
+  // Compute final background styling based on section background setting
+  let customBgStyle = {};
+  const bgType = secBg.type || 'default';
+
+  if (bgType === 'color' && secBg.color) {
+    customBgStyle = { backgroundColor: secBg.color };
+  } else if (bgType === 'gradient' && secBg.gradient) {
+    customBgStyle = { background: secBg.gradient };
+  } else if (bgType === 'image' && secBg.imageUrl) {
+    customBgStyle = {
+      backgroundImage: `url(${secBg.imageUrl})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  } else {
+    customBgStyle = { backgroundColor: defaultBgColor };
+  }
+
+  const effectiveBg = (bgType !== 'image' && (bgImage || theme.bgImage));
 
   return (
     <section
       data-anim={sectionAnim}
       className={`relative w-full overflow-hidden section-enter ${className}`}
       style={{
-        backgroundColor: bgColor,
+        ...customBgStyle,
         color: textColor,
         fontFamily: theme.bodyFont || "'Montserrat', sans-serif",
+        ...style,
       }}
     >
-      {/* Background Image or Light Royal Ivory Texture */}
-      {bgImage ? (
+      {/* Background Image Overlay / Tint for high contrast readability */}
+      {bgType === 'image' && secBg.imageUrl && (
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: `url(${bgImage})` }}
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+          style={{
+            backgroundColor: secBg.overlayColor || '#ffffff',
+            opacity: typeof secBg.overlayOpacity === 'number' ? secBg.overlayOpacity : 0.85,
+          }}
+        />
+      )}
+
+      {/* Background Pattern */}
+      {effectiveBg ? (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none opacity-20"
+          style={{ backgroundImage: `url(${effectiveBg})` }}
         />
       ) : (
-        <div className="absolute inset-0 royal-ivory-pattern pointer-events-none" />
+        bgType === 'default' ? (
+          <div className="absolute inset-0 royal-ivory-pattern pointer-events-none" />
+        ) : null
       )}
 
       {/* Ornate Gold Frame Border */}
       {theme.borderStyle === 'ornate' && (
         <div
-          className="absolute inset-3 sm:inset-5 pointer-events-none rounded-xl border border-dashed opacity-35"
+          className="absolute inset-3 sm:inset-5 pointer-events-none rounded-2xl border border-dashed opacity-35"
           style={{ borderColor: goldColor }}
         />
       )}

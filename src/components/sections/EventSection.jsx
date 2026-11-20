@@ -64,7 +64,10 @@ export default function EventSection({ eventKey, eventData, data, update, anim }
   const cfg = EVENT_THEME_CONFIGS[configKey];
 
   const gold = theme.primary || '#b8860b';
-  const accentColor = cfg.accent || theme.accent || '#4a1525';
+  const accentColor = ev.accent || cfg.accent || theme.accent || '#4a1525';
+  const cardBorder = ev.cardBorder || cfg.cardBorder || gold;
+  const bgTint = ev.bgTint || cfg.bgTint || '#ffffff';
+  const motifText = ev.motif || cfg.motif || '✦ SACRED CELEBRATION ✦';
 
   const setEv = (patch) => {
     update('separateEvents', {
@@ -76,21 +79,21 @@ export default function EventSection({ eventKey, eventData, data, update, anim }
   const googleCalUrl = getGoogleCalendarUrl(ev, couple);
 
   return (
-    <SectionShell data={data} sectionAnim={anim?.schedule || 'fade-up'}>
+    <SectionShell data={data} sectionKey={eventKey} sectionAnim={anim?.schedule || 'fade-up'}>
       <div className="flex flex-col items-center justify-center text-center px-3 sm:px-6 py-10 sm:py-16 max-w-xl mx-auto w-full">
         {/* Standalone Royal Card Container */}
         <div
           className="relative w-full rounded-[30px] border-2 shadow-xl p-5 sm:p-9 text-center transition-all overflow-hidden"
           style={{
-            borderColor: cfg.cardBorder || gold,
-            background: cfg.bgTint || '#ffffff',
+            borderColor: cardBorder,
+            background: bgTint,
             boxShadow: `0 16px 36px -8px rgba(74, 21, 37, 0.12), 0 0 0 1px rgba(184, 134, 11, 0.2)`,
           }}
         >
           {/* Inner Dashed Border */}
           <div
             className="absolute inset-2.5 rounded-[22px] border border-dashed pointer-events-none"
-            style={{ borderColor: `${cfg.cardBorder || gold}55` }}
+            style={{ borderColor: `${cardBorder}55` }}
           />
 
           {/* Corner Flourishes */}
@@ -117,7 +120,7 @@ export default function EventSection({ eventKey, eventData, data, update, anim }
 
           {/* Ceremony Auspicious Motif */}
           <div className="pt-2 text-[10px] sm:text-[11px] font-semibold tracking-[0.25em] uppercase" style={{ color: gold }}>
-            {cfg.motif}
+            {motifText}
           </div>
 
           {/* Event Badge / Auspicious Tag */}

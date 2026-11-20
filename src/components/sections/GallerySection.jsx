@@ -2,13 +2,12 @@ import EditableText from '../EditableText';
 import AnimatedText from '../AnimatedText';
 import { SectionShell, Divider } from './Shared';
 
-export default function GallerySection({ data, update, anim }) {
+export default function GallerySection({ data, update, anim, isMobile }) {
   const g = data.gallery || {};
   const theme = data.theme || {};
   const photos = g.photos || [];
-  const titleAnim = anim?.sectionTitle || 'none';
   const gold = theme.primary || '#b8860b';
-  const maroon = theme.accent || '#4a1525';
+  const maroon = theme.accent || '#1e293b';
 
   const setPhoto = (id, patch) => {
     update('gallery', {
@@ -17,20 +16,21 @@ export default function GallerySection({ data, update, anim }) {
   };
 
   return (
-    <SectionShell data={data} sectionAnim={anim?.gallery || 'fade-up'}>
-      <div className="flex flex-col items-center text-center px-6 py-20 md:py-28">
-        <AnimatedText
-          as="h2"
-          text={g.heading || 'Cherished Moments'}
-          animId={titleAnim}
-          style={{
-            fontFamily: theme.displayFont,
-            color: maroon,
-            fontSize: 'clamp(1.8rem, 5vw, 3rem)',
-            fontWeight: 600,
-          }}
-        />
-        <p className="mt-2 text-sm max-w-lg" style={{ color: maroon, opacity: 0.85 }}>
+    <SectionShell data={data} sectionKey="gallery" sectionAnim={anim?.gallery || 'fade-up'}>
+      <div className="flex flex-col items-center text-center px-4 sm:px-6 py-12 sm:py-20 max-w-4xl mx-auto w-full">
+        <p className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase" style={{ color: gold }}>
+          G A L L E R Y
+        </p>
+        <h2
+          className="font-cinzel mt-2 text-2xl sm:text-4xl font-semibold tracking-wider uppercase"
+          style={{ color: maroon }}
+        >
+          <EditableText
+            value={g.heading || 'Cherished Moments'}
+            onChange={(v) => update('gallery', { heading: v })}
+          />
+        </h2>
+        <p className="mt-1 text-xs sm:text-sm max-w-lg opacity-85" style={{ color: maroon }}>
           <EditableText
             value={g.subtitle || 'Glimpses from our journey together'}
             onChange={(v) => update('gallery', { subtitle: v })}
@@ -39,15 +39,15 @@ export default function GallerySection({ data, update, anim }) {
 
         <Divider color={gold} />
 
-        {/* Photo grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 max-w-5xl w-full">
+        {/* Photo grid - 1 Column on Mobile, 3 on Desktop */}
+        <div className={`grid ${isMobile ? 'grid-cols-1 max-w-sm' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl'} gap-6 mt-4 w-full`}>
           {photos.map((item) => (
             <div
               key={item.id}
               className="group relative rounded-2xl overflow-hidden bg-white border shadow-md transition-transform hover:-translate-y-1"
               style={{
                 borderColor: `${gold}44`,
-                boxShadow: '0 10px 25px -5px rgba(74, 21, 37, 0.08)',
+                boxShadow: '0 12px 30px -5px rgba(30, 41, 59, 0.1)',
               }}
             >
               <div
@@ -57,8 +57,8 @@ export default function GallerySection({ data, update, anim }) {
                   backgroundColor: '#f3ece1',
                 }}
               />
-              <div className="p-4 bg-white text-center border-t" style={{ borderColor: `${gold}22` }}>
-                <p className="text-sm font-semibold" style={{ color: maroon, fontFamily: theme.displayFont }}>
+              <div className="p-3 bg-white text-center border-t" style={{ borderColor: `${gold}22` }}>
+                <p className="text-xs sm:text-sm font-serif font-semibold" style={{ color: maroon }}>
                   <EditableText value={item.caption || ''} onChange={(v) => setPhoto(item.id, { caption: v })} />
                 </p>
               </div>
