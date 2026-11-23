@@ -1,17 +1,24 @@
-import { useState } from 'react';
-import { Sparkles, Copy, Check, MessageSquare, Hash, BookOpen } from 'lucide-react';
+import { useState } from "react";
+import {
+  Sparkles,
+  Copy,
+  Check,
+  MessageSquare,
+  Hash,
+  BookOpen,
+} from "lucide-react";
 
 export default function AiToolsPanel({ data, update, onToast }) {
-  const groom = data.hero?.groomName || 'Anmol';
-  const bride = data.hero?.brideName || 'Radhika';
-  const date = data.hero?.date || 'November 2026';
-  const location = data.hero?.location || 'Bagha Purana, Punjab';
+  const groom = data.hero?.groomName || "Anmol";
+  const bride = data.hero?.brideName || "Radhika";
+  const date = data.hero?.date || "November 2026";
+  const location = data.hero?.location || "Bagha Purana, Punjab";
 
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   // Dynamic hashtag generator
-  const cleanGroom = groom.replace(/[^a-zA-Z]/g, '');
-  const cleanBride = bride.replace(/[^a-zA-Z]/g, '');
+  const cleanGroom = groom.replace(/[^a-zA-Z]/g, "");
+  const cleanBride = bride.replace(/[^a-zA-Z]/g, "");
 
   const hashtags = [
     `#${cleanGroom}Ki${cleanBride}`,
@@ -24,35 +31,35 @@ export default function AiToolsPanel({ data, update, onToast }) {
 
   const verses = [
     {
-      title: 'Vedic Sacred Promise (English)',
-      text: 'Two souls, one sacred path, walking together toward an eternity of love and devotion.',
+      title: "Vedic Sacred Promise (English)",
+      text: "Two souls, one sacred path, walking together toward an eternity of love and devotion.",
     },
     {
-      title: 'Romantic Urdu / Hindi Shayeri',
-      text: 'हाथों में तेरा हाथ हो, हर पल तुम्हारा साथ हो, रब से बस यही दुआ है हमारी, खुशियों की सदा बरसात हो।',
+      title: "Romantic Urdu / Hindi Shayeri",
+      text: "हाथों में तेरा हाथ हो, हर पल तुम्हारा साथ हो, रब से बस यही दुआ है हमारी, खुशियों की सदा बरसात हो।",
     },
     {
-      title: 'Punjabi Gurbani Blessing',
-      text: 'ਧਨ ਪਿਰੁ ਏਹਿ ਨ ਆਖੀਅਨਿ ਬਹਨਿ ਇਕਠੇ ਹੋਇ ॥ ਏਕ ਜੋਤਿ ਦੁਇ ਮੂਰਤੀ ਧਨ ਪਿਰੁ ਕਹੀਐ ਸੋਇ ॥',
+      title: "Punjabi Gurbani Blessing",
+      text: "ਧਨ ਪਿਰੁ ਏਹਿ ਨ ਆਖੀਅਨਿ ਬਹਨਿ ਇਕਠੇ ਹੋਇ ॥ ਏਕ ਜੋਤਿ ਦੁਇ ਮੂਰਤੀ ਧਨ ਪਿਰੁ ਕਹੀਐ ਸੋਇ ॥",
     },
     {
-      title: 'Modern Classic Elegance',
-      text: 'From a simple hello to our forever beginning, we invite you to bless our sacred new chapter.',
+      title: "Modern Classic Elegance",
+      text: "From a simple hello to our forever beginning, we invite you to bless our sacred new chapter.",
     },
   ];
 
-  const whatsappMessage = `🌸 *Wedding Invitation: ${groom} & ${bride}* 🌸\n\n_|| Shree Ganeshay Namah ||_\n\nWith great joy and the blessings of our parents, we cordially invite you and your family to celebrate the auspicious wedding of:\n\n✨ *${groom} & ${bride}* ✨\n\n📅 *Dates:* ${date}\n📍 *Venue:* ${location}\n\n👇 *View Our Interactive Digital Invitation:* \n${window.location.origin}${window.location.pathname}?invite=${data.slug || 'wedding'}\n\nPlease join us to shower your gracious blessings upon the couple! 🙏❤️`;
+  const whatsappMessage = `🌸 *Wedding Invitation: ${groom} & ${bride}* 🌸\n\n_|| Shree Ganeshay Namah ||_\n\nWith great joy and the blessings of our parents, we cordially invite you and your family to celebrate the auspicious wedding of:\n\n✨ *${groom} & ${bride}* ✨\n\n📅 *Dates:* ${date}\n📍 *Venue:* ${location}\n\n👇 *View Our Interactive Digital Invitation:* \n${window.location.origin}${window.location.pathname}?invite=${data.slug || "wedding"}\n\nPlease join us to shower your gracious blessings upon the couple! 🙏❤️`;
 
   const copyToClipboard = (text, idx) => {
     navigator.clipboard?.writeText(text);
     setCopiedIndex(idx);
-    if (onToast) onToast('Copied to clipboard!');
+    if (onToast) onToast("Copied to clipboard!");
     setTimeout(() => setCopiedIndex(null), 2500);
   };
 
   const applyClosingLine = (text) => {
-    update('hero', { closingLine: text });
-    if (onToast) onToast('Applied verse to Hero closing line!');
+    update("hero", { closingLine: text });
+    if (onToast) onToast("Applied verse to Hero closing line!");
   };
 
   return (
@@ -65,11 +72,15 @@ export default function AiToolsPanel({ data, update, onToast }) {
             <span>AI WhatsApp Invitation Message</span>
           </div>
           <button
-            onClick={() => copyToClipboard(whatsappMessage, 'whatsapp')}
+            onClick={() => copyToClipboard(whatsappMessage, "whatsapp")}
             className="flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-700 text-white text-[11px] font-semibold hover:bg-emerald-800 transition cursor-pointer"
           >
-            {copiedIndex === 'whatsapp' ? <Check size={12} /> : <Copy size={12} />}
-            <span>{copiedIndex === 'whatsapp' ? 'Copied' : 'Copy Text'}</span>
+            {copiedIndex === "whatsapp" ? (
+              <Check size={12} />
+            ) : (
+              <Copy size={12} />
+            )}
+            <span>{copiedIndex === "whatsapp" ? "Copied" : "Copy Text"}</span>
           </button>
         </div>
         <textarea
@@ -120,7 +131,9 @@ export default function AiToolsPanel({ data, update, onToast }) {
               className="p-3 rounded-lg border border-stone-200 bg-white space-y-1.5 text-left"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-amber-800">{v.title}</span>
+                <span className="text-[11px] font-bold text-amber-800">
+                  {v.title}
+                </span>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => applyClosingLine(v.text)}
@@ -132,7 +145,11 @@ export default function AiToolsPanel({ data, update, onToast }) {
                     onClick={() => copyToClipboard(v.text, `verse-${idx}`)}
                     className="p-1 text-stone-400 hover:text-stone-700 cursor-pointer"
                   >
-                    {copiedIndex === `verse-${idx}` ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
+                    {copiedIndex === `verse-${idx}` ? (
+                      <Check size={12} className="text-emerald-600" />
+                    ) : (
+                      <Copy size={12} />
+                    )}
                   </button>
                 </div>
               </div>

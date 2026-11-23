@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import EditableText from '../EditableText';
-import { SectionShell, Divider } from './Shared';
-import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import { useState } from "react";
+import EditableText from "../EditableText";
+import { SectionShell, Divider } from "./Shared";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 
 export default function StorySection({ data, update, anim, isMobile }) {
   const s = data.story || {};
@@ -9,26 +9,35 @@ export default function StorySection({ data, update, anim, isMobile }) {
   const items = s.items || [];
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const set = (patch) => update('story', patch);
-  const gold = theme.primary || '#b8860b';
-  const maroon = theme.accent || '#1e293b';
+  const set = (patch) => update("story", patch);
+  const gold = theme.primary || "#b8860b";
+  const maroon = theme.accent || "#1e293b";
 
   const setItem = (id, patch) => {
-    update('story', {
+    update("story", {
       items: items.map((it) => (it.id === id ? { ...it, ...patch } : it)),
     });
   };
 
-  const nextItem = () => setCurrentIdx((i) => (i + 1) % Math.max(1, items.length));
-  const prevItem = () => setCurrentIdx((i) => (i - 1 + items.length) % Math.max(1, items.length));
+  const nextItem = () =>
+    setCurrentIdx((i) => (i + 1) % Math.max(1, items.length));
+  const prevItem = () =>
+    setCurrentIdx((i) => (i - 1 + items.length) % Math.max(1, items.length));
 
   const currentItem = items[currentIdx] || items[0] || {};
 
   return (
-    <SectionShell data={data} sectionKey="story" sectionAnim={anim?.story || 'fade-up'}>
+    <SectionShell
+      data={data}
+      sectionKey="story"
+      sectionAnim={anim?.story || "fade-up"}
+    >
       <div className="flex flex-col items-center text-center px-4 sm:px-6 py-12 sm:py-20 max-w-2xl mx-auto w-full">
         {/* Header */}
-        <p className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase" style={{ color: gold }}>
+        <p
+          className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase"
+          style={{ color: gold }}
+        >
           M E M O R I E S
         </p>
         <h2
@@ -36,13 +45,19 @@ export default function StorySection({ data, update, anim, isMobile }) {
           style={{ color: maroon }}
         >
           <EditableText
-            value={s.heading || 'Our Love Story'}
+            value={s.heading || "Our Love Story"}
             onChange={(v) => set({ heading: v })}
           />
         </h2>
-        <p className="mt-1.5 max-w-md text-xs sm:text-sm italic opacity-85 px-4" style={{ color: maroon }}>
+        <p
+          className="mt-1.5 max-w-md text-xs sm:text-sm italic opacity-85 px-4"
+          style={{ color: maroon }}
+        >
           <EditableText
-            value={s.subtitle || 'Two hearts, one soul, and a lifetime of adventures together.'}
+            value={
+              s.subtitle ||
+              "Two hearts, one soul, and a lifetime of adventures together."
+            }
             onChange={(v) => set({ subtitle: v })}
             multiline
           />
@@ -54,9 +69,10 @@ export default function StorySection({ data, update, anim, isMobile }) {
           <div
             className="rounded-3xl p-4 sm:p-5 shadow-2xl transition-all border text-center flex flex-col items-center"
             style={{
-              background: '#ffffff',
+              background: "#ffffff",
               borderColor: `${gold}55`,
-              boxShadow: '0 20px 45px -10px rgba(30, 41, 59, 0.15), 0 0 0 1px rgba(184, 134, 11, 0.25)',
+              boxShadow:
+                "0 20px 45px -10px rgba(30, 41, 59, 0.15), 0 0 0 1px rgba(184, 134, 11, 0.25)",
             }}
           >
             {/* Photo with Polaroid Matting */}
@@ -65,8 +81,8 @@ export default function StorySection({ data, update, anim, isMobile }) {
               style={{
                 backgroundImage: currentItem.image
                   ? `url(${currentItem.image})`
-                  : 'url(https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80)',
-                backgroundColor: '#f3ece1',
+                  : "url(https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80)",
+                backgroundColor: "#f3ece1",
               }}
             >
               <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-rose-600 shadow-xs">
@@ -81,7 +97,7 @@ export default function StorySection({ data, update, anim, isMobile }) {
                 style={{ color: maroon }}
               >
                 <EditableText
-                  value={currentItem.title || 'Our Special Moment'}
+                  value={currentItem.title || "Our Special Moment"}
                   onChange={(v) => setItem(currentItem.id, { title: v })}
                 />
               </h4>
@@ -90,7 +106,10 @@ export default function StorySection({ data, update, anim, isMobile }) {
                 style={{ color: maroon }}
               >
                 <EditableText
-                  value={currentItem.caption || 'A beautiful chapter of love, laughter, and togetherness.'}
+                  value={
+                    currentItem.caption ||
+                    "A beautiful chapter of love, laughter, and togetherness."
+                  }
                   onChange={(v) => setItem(currentItem.id, { caption: v })}
                   multiline
                 />
@@ -99,7 +118,10 @@ export default function StorySection({ data, update, anim, isMobile }) {
 
             {/* Navigation Dots & Buttons if multiple items */}
             {items.length > 1 && (
-              <div className="mt-2 pt-2 border-t w-full flex items-center justify-between px-2" style={{ borderColor: `${gold}25` }}>
+              <div
+                className="mt-2 pt-2 border-t w-full flex items-center justify-between px-2"
+                style={{ borderColor: `${gold}25` }}
+              >
                 <button
                   type="button"
                   onClick={prevItem}
@@ -116,7 +138,9 @@ export default function StorySection({ data, update, anim, isMobile }) {
                       type="button"
                       onClick={() => setCurrentIdx(idx)}
                       className={`h-2 rounded-full transition-all cursor-pointer ${
-                        currentIdx === idx ? 'w-5 bg-amber-700' : 'w-2 bg-stone-300'
+                        currentIdx === idx
+                          ? "w-5 bg-amber-700"
+                          : "w-2 bg-stone-300"
                       }`}
                     />
                   ))}
@@ -141,7 +165,10 @@ export default function StorySection({ data, update, anim, isMobile }) {
           style={{ color: gold }}
         >
           <EditableText
-            value={s.quote || 'From that first conversation to a lifetime of adventures'}
+            value={
+              s.quote ||
+              "From that first conversation to a lifetime of adventures"
+            }
             onChange={(v) => set({ quote: v })}
             multiline
           />

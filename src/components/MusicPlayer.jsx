@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Music } from 'lucide-react';
+import { useState, useEffect, useRef } from "react";
+import { Volume2, VolumeX, Music } from "lucide-react";
 
 export default function MusicPlayer({ music = {}, theme = {} }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
   const synthRef = useRef(null);
-  const gold = theme.primary || '#b8860b';
-  const maroon = theme.accent || '#4a1525';
+  const gold = theme.primary || "#b8860b";
+  const maroon = theme.accent || "#4a1525";
 
   if (!music.enabled) return null;
 
@@ -37,7 +37,9 @@ export default function MusicPlayer({ music = {}, theme = {} }) {
       const ctx = new AudioContext();
       synthRef.current = ctx;
 
-      const scale = [261.63, 293.66, 329.63, 369.99, 392.0, 440.0, 493.88, 523.25];
+      const scale = [
+        261.63, 293.66, 329.63, 369.99, 392.0, 440.0, 493.88, 523.25,
+      ];
 
       const timer = setInterval(() => {
         if (!synthRef.current) {
@@ -48,7 +50,7 @@ export default function MusicPlayer({ music = {}, theme = {} }) {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        osc.type = 'triangle';
+        osc.type = "triangle";
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
         gain.gain.setValueAtTime(0, ctx.currentTime);
@@ -91,11 +93,14 @@ export default function MusicPlayer({ music = {}, theme = {} }) {
         style={{
           borderColor: `${gold}88`,
           color: maroon,
-          boxShadow: '0 8px 25px -4px rgba(74, 21, 37, 0.18)',
+          boxShadow: "0 8px 25px -4px rgba(74, 21, 37, 0.18)",
         }}
-        title={isPlaying ? 'Pause Wedding Music' : 'Play Wedding Music'}
+        title={isPlaying ? "Pause Wedding Music" : "Play Wedding Music"}
       >
-        <span className={`p-1.5 rounded-full text-white ${isPlaying ? 'animate-spin' : ''}`} style={{ background: gold }}>
+        <span
+          className={`p-1.5 rounded-full text-white ${isPlaying ? "animate-spin" : ""}`}
+          style={{ background: gold }}
+        >
           <Music size={13} />
         </span>
         <span className="text-xs font-semibold pr-1" style={{ color: maroon }}>

@@ -1,5 +1,10 @@
-import { SECTION_ANIMATIONS, TEXT_ANIMATIONS, SECTION_KEYS, PARTICLE_TYPES } from '../../lib/animations';
-import { Play, Sparkles } from 'lucide-react';
+import {
+  SECTION_ANIMATIONS,
+  TEXT_ANIMATIONS,
+  SECTION_KEYS,
+  PARTICLE_TYPES,
+} from "../../lib/animations";
+import { Play, Sparkles } from "lucide-react";
 
 function AnimSelect({ label, value, onChange }) {
   return (
@@ -11,7 +16,9 @@ function AnimSelect({ label, value, onChange }) {
         className="rounded-md border border-stone-300 px-2 py-1.5 text-xs focus:border-stone-800 focus:outline-none bg-white"
       >
         {SECTION_ANIMATIONS.map((a) => (
-          <option key={a.id} value={a.id}>{a.label}</option>
+          <option key={a.id} value={a.id}>
+            {a.label}
+          </option>
         ))}
       </select>
     </div>
@@ -28,7 +35,9 @@ function TextAnimSelect({ label, value, onChange }) {
         className="rounded-md border border-stone-300 px-2 py-1.5 text-xs focus:border-stone-800 focus:outline-none bg-white"
       >
         {TEXT_ANIMATIONS.map((a) => (
-          <option key={a.id} value={a.id}>{a.label}</option>
+          <option key={a.id} value={a.id}>
+            {a.label}
+          </option>
         ))}
       </select>
     </div>
@@ -38,8 +47,9 @@ function TextAnimSelect({ label, value, onChange }) {
 export default function AnimationPanel({ data, update, onReplay }) {
   const anim = data.anim || {};
   const particles = data.particles || {};
-  const setAnim = (patch) => update('anim', patch);
-  const setParticles = (patch) => update('particles', { ...particles, ...patch });
+  const setAnim = (patch) => update("anim", patch);
+  const setParticles = (patch) =>
+    update("particles", { ...particles, ...patch });
 
   return (
     <div className="space-y-6">
@@ -63,12 +73,14 @@ export default function AnimationPanel({ data, update, onReplay }) {
           <div className="flex items-center justify-between gap-3">
             <label className="text-xs text-stone-600">Particle Type</label>
             <select
-              value={particles.type || 'petals'}
+              value={particles.type || "petals"}
               onChange={(e) => setParticles({ type: e.target.value })}
               className="rounded-md border border-stone-300 px-2 py-1.5 text-xs focus:border-stone-800 focus:outline-none bg-white"
             >
               {PARTICLE_TYPES.map((pt) => (
-                <option key={pt.id} value={pt.id}>{pt.label}</option>
+                <option key={pt.id} value={pt.id}>
+                  {pt.label}
+                </option>
               ))}
             </select>
           </div>
@@ -76,7 +88,7 @@ export default function AnimationPanel({ data, update, onReplay }) {
           <div className="flex items-center justify-between gap-3">
             <label className="text-xs text-stone-600">Density</label>
             <select
-              value={particles.density || 'medium'}
+              value={particles.density || "medium"}
               onChange={(e) => setParticles({ density: e.target.value })}
               className="rounded-md border border-stone-300 px-2 py-1.5 text-xs focus:border-stone-800 focus:outline-none bg-white"
             >
@@ -94,11 +106,20 @@ export default function AnimationPanel({ data, update, onReplay }) {
           Typography Animations
         </h4>
         <div className="space-y-3">
-          <TextAnimSelect label="Hero Monogram & Titles" value={anim.heroTitle || 'letter-reveal'} onChange={(v) => setAnim({ heroTitle: v })} />
-          <TextAnimSelect label="Section Headings" value={anim.sectionTitle || 'word-reveal'} onChange={(v) => setAnim({ sectionTitle: v })} />
+          <TextAnimSelect
+            label="Hero Monogram & Titles"
+            value={anim.heroTitle || "letter-reveal"}
+            onChange={(v) => setAnim({ heroTitle: v })}
+          />
+          <TextAnimSelect
+            label="Section Headings"
+            value={anim.sectionTitle || "word-reveal"}
+            onChange={(v) => setAnim({ sectionTitle: v })}
+          />
         </div>
         <p className="mt-2 text-[11px] text-stone-400 leading-relaxed">
-          Golden Stagger reveals letters one by one, Shimmer creates flowing gold light, and Typing writes each letter live.
+          Golden Stagger reveals letters one by one, Shimmer creates flowing
+          gold light, and Typing writes each letter live.
         </p>
       </div>
 
@@ -112,7 +133,7 @@ export default function AnimationPanel({ data, update, onReplay }) {
             <AnimSelect
               key={s.id}
               label={s.label}
-              value={anim[s.id] || 'fade-up'}
+              value={anim[s.id] || "fade-up"}
               onChange={(v) => setAnim({ [s.id]: v })}
             />
           ))}

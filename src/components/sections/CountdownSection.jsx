@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import EditableText from '../EditableText';
-import AnimatedText from '../AnimatedText';
-import { SectionShell, Divider } from './Shared';
+import { useState, useEffect } from "react";
+import EditableText from "../EditableText";
+import AnimatedText from "../AnimatedText";
+import { SectionShell, Divider } from "./Shared";
 
 export default function CountdownSection({ data, update, anim }) {
   const cd = data.countdown || {};
   const theme = data.theme || {};
-  const titleAnim = anim?.sectionTitle || 'none';
-  const targetDateStr = cd.targetDate || '2026-11-21T20:00:00';
-  const gold = theme.primary || '#b8860b';
-  const maroon = theme.accent || '#4a1525';
+  const titleAnim = anim?.sectionTitle || "none";
+  const targetDateStr = cd.targetDate || "2026-11-21T20:00:00";
+  const gold = theme.primary || "#b8860b";
+  const maroon = theme.accent || "#4a1525";
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -37,33 +37,46 @@ export default function CountdownSection({ data, update, anim }) {
     return () => clearInterval(interval);
   }, [targetDateStr]);
 
-  const set = (patch) => update('countdown', patch);
+  const set = (patch) => update("countdown", patch);
 
   const units = [
-    { label: 'Days', val: timeLeft.days },
-    { label: 'Hours', val: timeLeft.hours },
-    { label: 'Minutes', val: timeLeft.minutes },
-    { label: 'Seconds', val: timeLeft.seconds },
+    { label: "Days", val: timeLeft.days },
+    { label: "Hours", val: timeLeft.hours },
+    { label: "Minutes", val: timeLeft.minutes },
+    { label: "Seconds", val: timeLeft.seconds },
   ];
 
   return (
-    <SectionShell data={data} sectionKey="countdown" sectionAnim={anim?.countdown || 'fade-up'}>
+    <SectionShell
+      data={data}
+      sectionKey="countdown"
+      sectionAnim={anim?.countdown || "fade-up"}
+    >
       <div className="flex flex-col items-center text-center px-4 sm:px-6 py-12 sm:py-20">
-        <p className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase" style={{ color: gold }}>
-          S A V E  T H E  D A T E
+        <p
+          className="text-[10px] sm:text-xs font-semibold tracking-[0.35em] uppercase"
+          style={{ color: gold }}
+        >
+          S A V E T H E D A T E
         </p>
         <h2
           className="font-cinzel mt-2 text-2xl sm:text-4xl font-semibold tracking-wider uppercase"
           style={{ color: maroon }}
         >
           <EditableText
-            value={cd.heading || 'Counting Down To Forever'}
+            value={cd.heading || "Counting Down To Forever"}
             onChange={(v) => set({ heading: v })}
           />
         </h2>
-        <p className="mt-1 text-xs md:text-sm max-w-md uppercase tracking-[0.2em] font-medium" style={{ color: gold }}>
+        <p
+          className="mt-1 text-xs md:text-sm max-w-md uppercase tracking-[0.2em] font-medium"
+          style={{ color: gold }}
+        >
           <EditableText
-            value={cd.subtitle || 'Every passing second brings us closer to our forever'}
+            value={
+              cd.subtitle ||
+              "Every passing second brings us closer to our forever"
+            }
             onChange={(v) => set({ subtitle: v })}
           />
         </p>
@@ -78,7 +91,7 @@ export default function CountdownSection({ data, update, anim }) {
               className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-2xl border bg-white/94 backdrop-blur-xs shadow-md transition-transform hover:-translate-y-1"
               style={{
                 borderColor: `${gold}55`,
-                boxShadow: '0 8px 20px -4px rgba(30, 41, 59, 0.1)',
+                boxShadow: "0 8px 20px -4px rgba(30, 41, 59, 0.1)",
               }}
             >
               <span
@@ -87,7 +100,7 @@ export default function CountdownSection({ data, update, anim }) {
                   color: maroon,
                 }}
               >
-                {String(u.val).padStart(2, '0')}
+                {String(u.val).padStart(2, "0")}
               </span>
               <span
                 className="mt-1 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold"

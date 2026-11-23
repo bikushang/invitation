@@ -1,44 +1,70 @@
-import { useState } from 'react';
-import { X, Users, Download, Trash2, CheckCircle2, Search, Filter } from 'lucide-react';
-import { deleteSavedInvitation } from '../../lib/storage';
+import { useState } from "react";
+import {
+  X,
+  Users,
+  Download,
+  Trash2,
+  CheckCircle2,
+  Search,
+  Filter,
+} from "lucide-react";
+import { deleteSavedInvitation } from "../../lib/storage";
 
-export default function AdminDashboardModal({ isOpen, onClose, rsvpList = [], slug = 'default', onToast }) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function AdminDashboardModal({
+  isOpen,
+  onClose,
+  rsvpList = [],
+  slug = "default",
+  onToast,
+}) {
+  const [searchTerm, setSearchTerm] = useState("");
 
   if (!isOpen) return null;
 
   const totalResponses = rsvpList.length;
-  const confirmedAttending = rsvpList.filter((r) => r.attending !== 'regret');
-  const totalGuests = confirmedAttending.reduce((acc, curr) => acc + (parseInt(curr.guests) || 1), 0);
+  const confirmedAttending = rsvpList.filter((r) => r.attending !== "regret");
+  const totalGuests = confirmedAttending.reduce(
+    (acc, curr) => acc + (parseInt(curr.guests) || 1),
+    0,
+  );
 
-  const filtered = rsvpList.filter((r) =>
-    (r.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (r.wishes || '').toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = rsvpList.filter(
+    (r) =>
+      (r.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (r.wishes || "").toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   function exportCsv() {
     if (rsvpList.length === 0) {
-      alert('No RSVP data to export yet.');
+      alert("No RSVP data to export yet.");
       return;
     }
-    const headers = ['Name', 'Guests Count', 'Attending', 'Wishes', 'Submitted At'];
+    const headers = [
+      "Name",
+      "Guests Count",
+      "Attending",
+      "Wishes",
+      "Submitted At",
+    ];
     const rows = rsvpList.map((r) => [
-      `"${r.name || ''}"`,
-      r.guests || '1',
-      r.attending === 'regret' ? 'Declined' : 'Attending',
-      `"${(r.wishes || '').replace(/"/g, '""')}"`,
-      r.submittedAt || '',
+      `"${r.name || ""}"`,
+      r.guests || "1",
+      r.attending === "regret" ? "Declined" : "Attending",
+      `"${(r.wishes || "").replace(/"/g, '""')}"`,
+      r.submittedAt || "",
     ]);
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `wedding_rsvps_${slug}.csv`);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `wedding_rsvps_${slug}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    if (onToast) onToast('Exported RSVP CSV for wedding planning!');
+    if (onToast) onToast("Exported RSVP CSV for wedding planning!");
   }
 
   return (
@@ -74,7 +100,10 @@ export default function AdminDashboardModal({ isOpen, onClose, rsvpList = [], sl
               <Download size={14} />
               <span>Export CSV</span>
             </button>
-            <button onClick={onClose} className="p-1.5 text-stone-400 hover:text-stone-700 cursor-pointer">
+            <button
+              onClick={onClose}
+              className="p-1.5 text-stone-400 hover:text-stone-700 cursor-pointer"
+            >
               <X size={18} />
             </button>
           </div>
@@ -83,17 +112,30 @@ export default function AdminDashboardModal({ isOpen, onClose, rsvpList = [], sl
         {/* Stats Summary Cards */}
         <div className="grid grid-cols-3 gap-4 p-6 border-b border-stone-100 bg-stone-50/50">
           <div className="p-4 rounded-xl border border-stone-200 bg-white">
-            <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">Total RSVPs</p>
-            <p className="text-2xl font-bold text-stone-900 mt-1">{totalResponses}</p>
+            <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+              Total RSVPs
+            </p>
+            <p className="text-2xl font-bold text-stone-900 mt-1">
+              {totalResponses}
+            </p>
           </div>
           <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/50">
-            <p className="text-xs font-medium text-amber-900 uppercase tracking-wider">Confirmed Guests</p>
-            <p className="text-2xl font-bold text-amber-900 mt-1">{totalGuests}</p>
+            <p className="text-xs font-medium text-amber-900 uppercase tracking-wider">
+              Confirmed Guests
+            </p>
+            <p className="text-2xl font-bold text-amber-900 mt-1">
+              {totalGuests}
+            </p>
           </div>
           <div className="p-4 rounded-xl border border-stone-200 bg-white">
-            <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">Attendance Rate</p>
+            <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+              Attendance Rate
+            </p>
             <p className="text-2xl font-bold text-emerald-700 mt-1">
-              {totalResponses > 0 ? Math.round((confirmedAttending.length / totalResponses) * 100) : 100}%
+              {totalResponses > 0
+                ? Math.round((confirmedAttending.length / totalResponses) * 100)
+                : 100}
+              %
             </p>
           </div>
         </div>
@@ -114,7 +156,8 @@ export default function AdminDashboardModal({ isOpen, onClose, rsvpList = [], sl
         <div className="flex-1 overflow-y-auto builder-scroll p-6">
           {filtered.length === 0 ? (
             <div className="py-12 text-center text-xs text-stone-500">
-              No RSVPs matching your search. Guests who fill out the RSVP section will appear here automatically.
+              No RSVPs matching your search. Guests who fill out the RSVP
+              section will appear here automatically.
             </div>
           ) : (
             <div className="divide-y divide-stone-100 border border-stone-200 rounded-xl overflow-hidden">
@@ -125,21 +168,27 @@ export default function AdminDashboardModal({ isOpen, onClose, rsvpList = [], sl
                 <span className="col-span-2 text-right">Received</span>
               </div>
               {filtered.map((rsvp) => (
-                <div key={rsvp.id} className="grid grid-cols-12 p-3 text-xs items-center hover:bg-stone-50 transition">
+                <div
+                  key={rsvp.id}
+                  className="grid grid-cols-12 p-3 text-xs items-center hover:bg-stone-50 transition"
+                >
                   <div className="col-span-4 font-semibold text-stone-900 flex items-center gap-1.5">
                     <CheckCircle2 size={14} className="text-emerald-600" />
                     <span>{rsvp.name}</span>
                   </div>
                   <div className="col-span-2 text-center">
                     <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-semibold text-[11px]">
-                      {rsvp.guests || 1} {parseInt(rsvp.guests) > 1 ? 'Guests' : 'Guest'}
+                      {rsvp.guests || 1}{" "}
+                      {parseInt(rsvp.guests) > 1 ? "Guests" : "Guest"}
                     </span>
                   </div>
                   <div className="col-span-4 text-stone-600 italic truncate pr-2">
-                    {rsvp.wishes ? `"${rsvp.wishes}"` : '—'}
+                    {rsvp.wishes ? `"${rsvp.wishes}"` : "—"}
                   </div>
                   <div className="col-span-2 text-right text-[11px] text-stone-400">
-                    {rsvp.submittedAt ? new Date(rsvp.submittedAt).toLocaleDateString() : 'Today'}
+                    {rsvp.submittedAt
+                      ? new Date(rsvp.submittedAt).toLocaleDateString()
+                      : "Today"}
                   </div>
                 </div>
               ))}

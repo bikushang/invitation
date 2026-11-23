@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export default function AnimatedText({
-  text = '',
-  animId = 'none',
-  as: Tag = 'span',
-  className = '',
+  text = "",
+  animId = "none",
+  as: Tag = "span",
+  className = "",
   style,
   staggerMs = 25,
 }) {
-  const [typed, setTyped] = useState(String(text || ''));
+  const [typed, setTyped] = useState(String(text || ""));
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef(null);
 
   // Typing effect
   useEffect(() => {
-    if (animId !== 'typing') return;
-    const str = String(text || '');
+    if (animId !== "typing") return;
+    const str = String(text || "");
     let i = 0;
-    setTyped('');
+    setTyped("");
     const speed = Math.max(25, Math.min(60, 1500 / Math.max(str.length, 1)));
     const timer = setInterval(() => {
       i += 1;
@@ -30,12 +30,12 @@ export default function AnimatedText({
     return () => clearInterval(timer);
   }, [text, animId]);
 
-  if (animId === 'typing') {
-    const str = String(text || '');
+  if (animId === "typing") {
+    const str = String(text || "");
     return (
       <Tag
         ref={ref}
-        className={`${className} ${!hasAnimated && typed.length < str.length ? 'typing-cursor' : ''}`}
+        className={`${className} ${!hasAnimated && typed.length < str.length ? "typing-cursor" : ""}`}
         style={style}
       >
         {typed || str}
@@ -43,7 +43,7 @@ export default function AnimatedText({
     );
   }
 
-  if (animId === 'shimmer') {
+  if (animId === "shimmer") {
     return (
       <Tag ref={ref} className={`${className} anim-shimmer`} style={style}>
         {text}
@@ -51,7 +51,7 @@ export default function AnimatedText({
     );
   }
 
-  if (animId === 'none') {
+  if (animId === "none") {
     return (
       <Tag ref={ref} className={className} style={style}>
         {text}
@@ -60,11 +60,9 @@ export default function AnimatedText({
   }
 
   // letter-reveal or word-reveal
-  const str = String(text || '');
+  const str = String(text || "");
   const units =
-    animId === 'letter-reveal'
-      ? Array.from(str)
-      : str.split(/(\s+)/);
+    animId === "letter-reveal" ? Array.from(str) : str.split(/(\s+)/);
 
   return (
     <Tag
@@ -73,7 +71,7 @@ export default function AnimatedText({
       style={style}
     >
       {units.map((unit, i) => {
-        if (unit.trim() === '') {
+        if (unit.trim() === "") {
           return <span key={i}>{unit}</span>;
         }
         return (

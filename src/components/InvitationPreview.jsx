@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import HeroSection from './sections/HeroSection';
-import CountdownSection from './sections/CountdownSection';
-import FamiliesSection from './sections/FamiliesSection';
-import StorySection from './sections/StorySection';
-import ScheduleSection from './sections/ScheduleSection';
-import EventSection from './sections/EventSection';
-import GallerySection from './sections/GallerySection';
-import VenueMapSection from './sections/VenueMapSection';
-import RsvpSection from './sections/RsvpSection';
-import OpeningAnimation from './OpeningAnimation';
-import ParticlesEffect from './ParticlesEffect';
-import MusicPlayer from './MusicPlayer';
-import { ChevronUp, ChevronDown, Eye, EyeOff, Paintbrush } from 'lucide-react';
-import { DEFAULT_INVITATION } from '../lib/defaultData';
+import { useState, useEffect } from "react";
+import HeroSection from "./sections/HeroSection";
+import CountdownSection from "./sections/CountdownSection";
+import FamiliesSection from "./sections/FamiliesSection";
+import StorySection from "./sections/StorySection";
+import ScheduleSection from "./sections/ScheduleSection";
+import EventSection from "./sections/EventSection";
+import GallerySection from "./sections/GallerySection";
+import VenueMapSection from "./sections/VenueMapSection";
+import RsvpSection from "./sections/RsvpSection";
+import OpeningAnimation from "./OpeningAnimation";
+import ParticlesEffect from "./ParticlesEffect";
+import MusicPlayer from "./MusicPlayer";
+import { ChevronUp, ChevronDown, Eye, EyeOff, Paintbrush } from "lucide-react";
+import { DEFAULT_INVITATION } from "../lib/defaultData";
 
 export default function InvitationPreview({
   data,
@@ -39,13 +39,13 @@ export default function InvitationPreview({
   const theme = data.theme || {};
   const isDark =
     !theme.ink ||
-    theme.ink.startsWith('#0') ||
-    theme.ink.startsWith('#1') ||
-    theme.ink.startsWith('#2') ||
-    theme.ink.startsWith('#3a');
+    theme.ink.startsWith("#0") ||
+    theme.ink.startsWith("#1") ||
+    theme.ink.startsWith("#2") ||
+    theme.ink.startsWith("#3a");
 
-  const containerBg = isDark ? '#fdfbf7' : theme.ink;
-  const textColor = isDark ? '#1e293b' : theme.accent || '#1e293b';
+  const containerBg = isDark ? "#fdfbf7" : theme.ink;
+  const textColor = isDark ? "#1e293b" : theme.accent || "#1e293b";
 
   const sectionsOrder = data.sectionsOrder || DEFAULT_INVITATION.sectionsOrder;
   const visibility = data.sectionVisibility || {};
@@ -57,12 +57,12 @@ export default function InvitationPreview({
     const newOrder = [...sectionsOrder];
     const [removed] = newOrder.splice(index, 1);
     newOrder.splice(targetIdx, 0, removed);
-    update('sectionsOrder', newOrder);
+    update("sectionsOrder", newOrder);
   }
 
   function toggleVisibility(secKey) {
     if (!update) return;
-    update('sectionVisibility', {
+    update("sectionVisibility", {
       ...visibility,
       [secKey]: visibility[secKey] === false ? true : false,
     });
@@ -73,10 +73,11 @@ export default function InvitationPreview({
 
     let component = null;
 
-    if (key.startsWith('event_')) {
+    if (key.startsWith("event_")) {
       const eventData =
         (data.separateEvents && data.separateEvents[key]) ||
-        (DEFAULT_INVITATION.separateEvents && DEFAULT_INVITATION.separateEvents[key]) ||
+        (DEFAULT_INVITATION.separateEvents &&
+          DEFAULT_INVITATION.separateEvents[key]) ||
         {};
       component = (
         <EventSection
@@ -90,36 +91,87 @@ export default function InvitationPreview({
       );
     } else {
       switch (key) {
-        case 'hero':
-          component = <HeroSection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "hero":
+          component = (
+            <HeroSection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'countdown':
-          component = <CountdownSection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "countdown":
+          component = (
+            <CountdownSection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'families':
-          component = <FamiliesSection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "families":
+          component = (
+            <FamiliesSection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'story':
-          component = <StorySection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "story":
+          component = (
+            <StorySection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'schedule':
+        case "schedule":
           // Purged in favor of separate standalone EventSection instances
           return null;
-        case 'gallery':
-          component = <GallerySection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "gallery":
+          component = (
+            <GallerySection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'venue':
-          component = <VenueMapSection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "venue":
+          component = (
+            <VenueMapSection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
-        case 'rsvp':
-          component = <RsvpSection data={data} update={update} anim={anim} isMobile={isMobile} />;
+        case "rsvp":
+          component = (
+            <RsvpSection
+              data={data}
+              update={update}
+              anim={anim}
+              isMobile={isMobile}
+            />
+          );
           break;
         default:
           return null;
       }
     }
 
-    const friendlyLabel = key.startsWith('event_') ? key.replace('event_', '').toUpperCase() : key;
+    const friendlyLabel = key.startsWith("event_")
+      ? key.replace("event_", "").toUpperCase()
+      : key;
 
     return (
       <div key={key} className="relative group/section w-full">
@@ -159,7 +211,11 @@ export default function InvitationPreview({
               className="p-1 hover:bg-stone-800 rounded text-stone-300 hover:text-white cursor-pointer"
               title="Toggle visibility"
             >
-              {visibility[key] === false ? <EyeOff size={14} /> : <Eye size={14} />}
+              {visibility[key] === false ? (
+                <EyeOff size={14} />
+              ) : (
+                <Eye size={14} />
+              )}
             </button>
           </div>
         )}
@@ -170,7 +226,7 @@ export default function InvitationPreview({
 
   return (
     <div
-      className={`relative w-full min-h-screen ${isMobile ? 'is-mobile-view' : ''}`}
+      className={`relative w-full min-h-screen ${isMobile ? "is-mobile-view" : ""}`}
       style={{
         backgroundColor: containerBg,
         color: textColor,
@@ -179,9 +235,9 @@ export default function InvitationPreview({
     >
       {/* Floating Festive Particles */}
       <ParticlesEffect
-        type={data.particles?.type || 'petals'}
-        color={theme.primary || '#b8860b'}
-        density={data.particles?.density || 'medium'}
+        type={data.particles?.type || "petals"}
+        color={theme.primary || "#b8860b"}
+        density={data.particles?.density || "medium"}
       />
 
       {/* Floating Wedding Music Player */}
@@ -189,11 +245,7 @@ export default function InvitationPreview({
 
       {/* When Cover is NOT open, show the Cover Presentation */}
       {!internalCoverOpen && data.intro?.enabled ? (
-        <OpeningAnimation
-          data={data}
-          isOpen={false}
-          onOpen={handleOpenCover}
-        />
+        <OpeningAnimation data={data} isOpen={false} onOpen={handleOpenCover} />
       ) : (
         /* When Cover IS open, show full invitation sections */
         <div className="relative z-10 w-full section-enter">

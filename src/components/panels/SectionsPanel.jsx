@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   GripVertical,
   Eye,
@@ -10,71 +10,77 @@ import {
   Palette,
   Sparkles,
   RotateCcw,
-} from 'lucide-react';
-import { SECTION_KEYS } from '../../lib/animations';
+} from "lucide-react";
+import { SECTION_KEYS } from "../../lib/animations";
 
 const SOLID_PRESETS = [
-  { name: 'Royal Ivory', color: '#fdfbf7' },
-  { name: 'Golden Cream', color: '#fcf6e8' },
-  { name: 'Champagne', color: '#fff8e7' },
-  { name: 'Pale Sand', color: '#f7f0e3' },
-  { name: 'Sandstone', color: '#f5ebd9' },
-  { name: 'Blush Rose', color: '#fcf1f3' },
-  { name: 'Royal Crimson', color: '#4a1525' },
-  { name: 'Regal Navy', color: '#132238' },
-  { name: 'Emerald Green', color: '#143828' },
-  { name: 'Kesari Saffron', color: '#7a3e08' },
-  { name: 'Pure White', color: '#ffffff' },
+  { name: "Royal Ivory", color: "#fdfbf7" },
+  { name: "Golden Cream", color: "#fcf6e8" },
+  { name: "Champagne", color: "#fff8e7" },
+  { name: "Pale Sand", color: "#f7f0e3" },
+  { name: "Sandstone", color: "#f5ebd9" },
+  { name: "Blush Rose", color: "#fcf1f3" },
+  { name: "Royal Crimson", color: "#4a1525" },
+  { name: "Regal Navy", color: "#132238" },
+  { name: "Emerald Green", color: "#143828" },
+  { name: "Kesari Saffron", color: "#7a3e08" },
+  { name: "Pure White", color: "#ffffff" },
 ];
 
 const GRADIENT_PRESETS = [
   {
-    name: 'Champagne Shimmer',
-    gradient: 'linear-gradient(135deg, #fffefb 0%, #faf3e0 50%, #f4e4bc 100%)',
+    name: "Champagne Shimmer",
+    gradient: "linear-gradient(135deg, #fffefb 0%, #faf3e0 50%, #f4e4bc 100%)",
   },
   {
-    name: 'Sunset Haldi Gold',
-    gradient: 'linear-gradient(135deg, #fffdf2 0%, #fff6d6 50%, #ffe8a3 100%)',
+    name: "Sunset Haldi Gold",
+    gradient: "linear-gradient(135deg, #fffdf2 0%, #fff6d6 50%, #ffe8a3 100%)",
   },
   {
-    name: 'Blush & Rose Gold',
-    gradient: 'linear-gradient(135deg, #fff7f8 0%, #fae6e9 50%, #f3d1d7 100%)',
+    name: "Blush & Rose Gold",
+    gradient: "linear-gradient(135deg, #fff7f8 0%, #fae6e9 50%, #f3d1d7 100%)",
   },
   {
-    name: 'Royal Marwar Crimson',
-    gradient: 'linear-gradient(135deg, #2b0b14 0%, #4a1525 50%, #6e1a32 100%)',
+    name: "Royal Marwar Crimson",
+    gradient: "linear-gradient(135deg, #2b0b14 0%, #4a1525 50%, #6e1a32 100%)",
   },
   {
-    name: 'Regal Emerald',
-    gradient: 'linear-gradient(135deg, #0d281e 0%, #174433 50%, #205c45 100%)',
+    name: "Regal Emerald",
+    gradient: "linear-gradient(135deg, #0d281e 0%, #174433 50%, #205c45 100%)",
   },
   {
-    name: 'Midnight Sapphire',
-    gradient: 'linear-gradient(135deg, #0e1a2b 0%, #182e4b 50%, #23436d 100%)',
+    name: "Midnight Sapphire",
+    gradient: "linear-gradient(135deg, #0e1a2b 0%, #182e4b 50%, #23436d 100%)",
   },
   {
-    name: 'Delicate Silk Parchment',
-    gradient: 'linear-gradient(180deg, #fdfbf7 0%, #f5eee0 100%)',
+    name: "Delicate Silk Parchment",
+    gradient: "linear-gradient(180deg, #fdfbf7 0%, #f5eee0 100%)",
   },
 ];
 
 const INDIAN_BG_IMAGES = [
   {
-    name: 'Royal Palace Architecture',
-    url: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80',
+    name: "Royal Palace Architecture",
+    url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: 'Auspicious Floral Marigold',
-    url: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1200&q=80',
+    name: "Auspicious Floral Marigold",
+    url: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: 'Intricate Bridal Henna',
-    url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80',
+    name: "Intricate Bridal Henna",
+    url: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
-export default function SectionsPanel({ data, update, initialActiveSec = null }) {
-  const sectionsOrder = (data.sectionsOrder || []).filter((s) => s !== 'schedule');
+export default function SectionsPanel({
+  data,
+  update,
+  initialActiveSec = null,
+}) {
+  const sectionsOrder = (data.sectionsOrder || []).filter(
+    (s) => s !== "schedule",
+  );
   const visibility = data.sectionVisibility || {};
   const backgrounds = data.sectionBackgrounds || {};
 
@@ -82,16 +88,16 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
   const [activeBgSec, setActiveBgSec] = useState(initialActiveSec);
 
   // Custom Gradient builder state
-  const [customGradDir, setCustomGradDir] = useState('135deg');
-  const [customGradC1, setCustomGradC1] = useState('#fffefb');
-  const [customGradC2, setCustomGradC2] = useState('#f4e4bc');
+  const [customGradDir, setCustomGradDir] = useState("135deg");
+  const [customGradC1, setCustomGradC1] = useState("#fffefb");
+  const [customGradC2, setCustomGradC2] = useState("#f4e4bc");
 
   const getLabel = (id) => {
     const found = SECTION_KEYS.find((s) => s.id === id);
     if (found) return found.label;
-    if (id.startsWith('event_')) {
+    if (id.startsWith("event_")) {
       const ev = (data.separateEvents && data.separateEvents[id]) || {};
-      return `✦ ${ev.badge || ev.name || id.replace('event_', '').toUpperCase()}`;
+      return `✦ ${ev.badge || ev.name || id.replace("event_", "").toUpperCase()}`;
     }
     return id.charAt(0).toUpperCase() + id.slice(1);
   };
@@ -102,21 +108,21 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
     const newOrder = [...sectionsOrder];
     const [item] = newOrder.splice(index, 1);
     newOrder.splice(targetIdx, 0, item);
-    update('sectionsOrder', newOrder);
+    update("sectionsOrder", newOrder);
   }
 
   function toggleVisibility(id) {
-    update('sectionVisibility', {
+    update("sectionVisibility", {
       ...visibility,
       [id]: visibility[id] === false ? true : false,
     });
   }
 
   function updateSecBg(secId, patch) {
-    update('sectionBackgrounds', {
+    update("sectionBackgrounds", {
       ...backgrounds,
       [secId]: {
-        ...(backgrounds[secId] || { type: 'default' }),
+        ...(backgrounds[secId] || { type: "default" }),
         ...patch,
       },
     });
@@ -125,7 +131,7 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
   function resetSecBg(secId) {
     const copy = { ...backgrounds };
     delete copy[secId];
-    update('sectionBackgrounds', copy);
+    update("sectionBackgrounds", copy);
   }
 
   // HTML5 Drag and Drop handlers
@@ -143,7 +149,7 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
     const newOrder = [...sectionsOrder];
     const [moved] = newOrder.splice(draggedIdx, 1);
     newOrder.splice(targetIdx, 0, moved);
-    update('sectionsOrder', newOrder);
+    update("sectionsOrder", newOrder);
     setDraggedIdx(null);
   }
 
@@ -155,7 +161,9 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
           <span>Section Layout & Custom Backgrounds</span>
         </p>
         <p className="text-[11px] text-amber-900/80 leading-relaxed">
-          Reorder sections via drag & drop. Click the paintbrush icon on any section to customize its individual background with solid royal colors, gradients, or authentic Indian wedding images.
+          Reorder sections via drag & drop. Click the paintbrush icon on any
+          section to customize its individual background with solid royal
+          colors, gradients, or authentic Indian wedding images.
         </p>
       </div>
 
@@ -163,8 +171,8 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
         {sectionsOrder.map((secId, index) => {
           const isVisible = visibility[secId] !== false;
           const isDragging = draggedIdx === index;
-          const secBg = backgrounds[secId] || { type: 'default' };
-          const hasCustomBg = secBg.type && secBg.type !== 'default';
+          const secBg = backgrounds[secId] || { type: "default" };
+          const hasCustomBg = secBg.type && secBg.type !== "default";
           const isPanelOpen = activeBgSec === secId;
 
           return (
@@ -177,18 +185,23 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                 onDrop={(e) => handleDrop(e, index)}
                 className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-grab active:cursor-grabbing ${
                   isDragging
-                    ? 'border-dashed border-stone-400 bg-stone-100 opacity-50'
+                    ? "border-dashed border-stone-400 bg-stone-100 opacity-50"
                     : isPanelOpen
-                    ? 'border-amber-700 bg-amber-50/40 shadow-xs'
-                    : 'border-stone-200 bg-white hover:border-stone-400 shadow-xs'
+                      ? "border-amber-700 bg-amber-50/40 shadow-xs"
+                      : "border-stone-200 bg-white hover:border-stone-400 shadow-xs"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <GripVertical size={16} className="text-stone-400 hover:text-stone-600 cursor-grab" />
+                  <GripVertical
+                    size={16}
+                    className="text-stone-400 hover:text-stone-600 cursor-grab"
+                  />
                   <div className="flex items-center gap-2">
                     <span
                       className={`text-sm font-medium ${
-                        isVisible ? 'text-stone-800' : 'text-stone-400 line-through'
+                        isVisible
+                          ? "text-stone-800"
+                          : "text-stone-400 line-through"
                       }`}
                     >
                       {getLabel(secId)}
@@ -208,10 +221,10 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                     onClick={() => setActiveBgSec(isPanelOpen ? null : secId)}
                     className={`p-1.5 rounded-md transition cursor-pointer ${
                       isPanelOpen
-                        ? 'bg-amber-800 text-white shadow-xs'
+                        ? "bg-amber-800 text-white shadow-xs"
                         : hasCustomBg
-                        ? 'bg-amber-100 text-amber-900 hover:bg-amber-200'
-                        : 'text-stone-400 hover:text-stone-800 hover:bg-stone-100'
+                          ? "bg-amber-100 text-amber-900 hover:bg-amber-200"
+                          : "text-stone-400 hover:text-stone-800 hover:bg-stone-100"
                     }`}
                     title="Customize Section Background"
                   >
@@ -240,9 +253,11 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                     type="button"
                     onClick={() => toggleVisibility(secId)}
                     className={`p-1 rounded transition cursor-pointer ${
-                      isVisible ? 'text-stone-600 hover:text-stone-900 hover:bg-stone-100' : 'text-stone-300 hover:text-stone-500'
+                      isVisible
+                        ? "text-stone-600 hover:text-stone-900 hover:bg-stone-100"
+                        : "text-stone-300 hover:text-stone-500"
                     }`}
-                    title={isVisible ? 'Hide Section' : 'Show Section'}
+                    title={isVisible ? "Hide Section" : "Show Section"}
                   >
                     {isVisible ? <Eye size={16} /> : <EyeOff size={16} />}
                   </button>
@@ -272,19 +287,20 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                   {/* Mode Tabs */}
                   <div className="grid grid-cols-4 gap-1 p-1 bg-stone-100 rounded-lg border border-stone-200 text-center">
                     {[
-                      { id: 'default', label: 'Default' },
-                      { id: 'color', label: 'Solid Color' },
-                      { id: 'gradient', label: 'Gradient' },
-                      { id: 'image', label: 'Image URL' },
+                      { id: "default", label: "Default" },
+                      { id: "color", label: "Solid Color" },
+                      { id: "gradient", label: "Gradient" },
+                      { id: "image", label: "Image URL" },
                     ].map((m) => (
                       <button
                         key={m.id}
                         type="button"
                         onClick={() => updateSecBg(secId, { type: m.id })}
                         className={`py-1 rounded text-[11px] font-semibold transition cursor-pointer ${
-                          secBg.type === m.id || (!secBg.type && m.id === 'default')
-                            ? 'bg-white text-amber-900 shadow-xs'
-                            : 'text-stone-600 hover:text-stone-900'
+                          secBg.type === m.id ||
+                          (!secBg.type && m.id === "default")
+                            ? "bg-white text-amber-900 shadow-xs"
+                            : "text-stone-600 hover:text-stone-900"
                         }`}
                       >
                         {m.label}
@@ -293,7 +309,7 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                   </div>
 
                   {/* Mode 1: Solid Color */}
-                  {secBg.type === 'color' && (
+                  {secBg.type === "color" && (
                     <div className="space-y-3">
                       <div>
                         <label className="text-[11px] font-semibold text-stone-700 block mb-1">
@@ -302,14 +318,18 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                         <div className="flex items-center gap-2">
                           <input
                             type="color"
-                            value={secBg.color || '#fdfbf7'}
-                            onChange={(e) => updateSecBg(secId, { color: e.target.value })}
+                            value={secBg.color || "#fdfbf7"}
+                            onChange={(e) =>
+                              updateSecBg(secId, { color: e.target.value })
+                            }
                             className="w-10 h-8 rounded border border-stone-300 cursor-pointer"
                           />
                           <input
                             type="text"
-                            value={secBg.color || '#fdfbf7'}
-                            onChange={(e) => updateSecBg(secId, { color: e.target.value })}
+                            value={secBg.color || "#fdfbf7"}
+                            onChange={(e) =>
+                              updateSecBg(secId, { color: e.target.value })
+                            }
                             className="flex-1 rounded-md border border-stone-300 px-2.5 py-1 text-xs font-mono"
                           />
                         </div>
@@ -324,11 +344,13 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                             <button
                               key={p.name}
                               type="button"
-                              onClick={() => updateSecBg(secId, { color: p.color })}
+                              onClick={() =>
+                                updateSecBg(secId, { color: p.color })
+                              }
                               className={`flex items-center gap-1.5 px-2 py-1 rounded-md border text-[10px] font-medium transition cursor-pointer ${
                                 secBg.color === p.color
-                                  ? 'border-amber-800 ring-2 ring-amber-700/30 font-bold'
-                                  : 'border-stone-200 bg-white hover:border-stone-400'
+                                  ? "border-amber-800 ring-2 ring-amber-700/30 font-bold"
+                                  : "border-stone-200 bg-white hover:border-stone-400"
                               }`}
                             >
                               <span
@@ -344,7 +366,7 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                   )}
 
                   {/* Mode 2: Gradient */}
-                  {secBg.type === 'gradient' && (
+                  {secBg.type === "gradient" && (
                     <div className="space-y-3">
                       <div>
                         <span className="text-[11px] font-semibold text-stone-700 block mb-1.5">
@@ -355,14 +377,18 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                             <button
                               key={g.name}
                               type="button"
-                              onClick={() => updateSecBg(secId, { gradient: g.gradient })}
+                              onClick={() =>
+                                updateSecBg(secId, { gradient: g.gradient })
+                              }
                               className={`w-full p-2 rounded-lg border text-left transition flex items-center justify-between cursor-pointer ${
                                 secBg.gradient === g.gradient
-                                  ? 'border-amber-800 ring-2 ring-amber-700/30 shadow-xs'
-                                  : 'border-stone-200 hover:border-stone-400 bg-white'
+                                  ? "border-amber-800 ring-2 ring-amber-700/30 shadow-xs"
+                                  : "border-stone-200 hover:border-stone-400 bg-white"
                               }`}
                             >
-                              <span className="font-medium text-stone-800">{g.name}</span>
+                              <span className="font-medium text-stone-800">
+                                {g.name}
+                              </span>
                               <div
                                 className="w-20 h-5 rounded border border-stone-300 shadow-inner"
                                 style={{ background: g.gradient }}
@@ -380,7 +406,9 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                         </span>
                         <div className="grid grid-cols-3 gap-2">
                           <div>
-                            <label className="text-[10px] text-stone-500 block mb-0.5">Start</label>
+                            <label className="text-[10px] text-stone-500 block mb-0.5">
+                              Start
+                            </label>
                             <input
                               type="color"
                               value={customGradC1}
@@ -394,7 +422,9 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] text-stone-500 block mb-0.5">End</label>
+                            <label className="text-[10px] text-stone-500 block mb-0.5">
+                              End
+                            </label>
                             <input
                               type="color"
                               value={customGradC2}
@@ -408,7 +438,9 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] text-stone-500 block mb-0.5">Angle</label>
+                            <label className="text-[10px] text-stone-500 block mb-0.5">
+                              Angle
+                            </label>
                             <select
                               value={customGradDir}
                               onChange={(e) => {
@@ -419,10 +451,16 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                               }}
                               className="w-full h-8 rounded border border-stone-300 text-xs px-1 bg-white"
                             >
-                              <option value="180deg">Vertical (Top-Down)</option>
+                              <option value="180deg">
+                                Vertical (Top-Down)
+                              </option>
                               <option value="135deg">Diagonal (135°)</option>
-                              <option value="90deg">Horizontal (Left-Right)</option>
-                              <option value="circle">Radial (Center Out)</option>
+                              <option value="90deg">
+                                Horizontal (Left-Right)
+                              </option>
+                              <option value="circle">
+                                Radial (Center Out)
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -431,7 +469,7 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                   )}
 
                   {/* Mode 3: Image URL */}
-                  {secBg.type === 'image' && (
+                  {secBg.type === "image" && (
                     <div className="space-y-3">
                       <div>
                         <label className="text-[11px] font-semibold text-stone-700 block mb-1">
@@ -439,9 +477,11 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                         </label>
                         <input
                           type="text"
-                          value={secBg.imageUrl || ''}
+                          value={secBg.imageUrl || ""}
                           placeholder="https://... (Indian wedding image)"
-                          onChange={(e) => updateSecBg(secId, { imageUrl: e.target.value })}
+                          onChange={(e) =>
+                            updateSecBg(secId, { imageUrl: e.target.value })
+                          }
                           className="w-full rounded-md border border-stone-300 px-3 py-1.5 text-xs text-stone-900 bg-white"
                         />
                       </div>
@@ -455,14 +495,18 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                             <button
                               key={img.name}
                               type="button"
-                              onClick={() => updateSecBg(secId, { imageUrl: img.url })}
+                              onClick={() =>
+                                updateSecBg(secId, { imageUrl: img.url })
+                              }
                               className="p-1.5 rounded-lg border border-stone-200 hover:border-amber-700 bg-white flex items-center gap-2 text-left transition cursor-pointer"
                             >
                               <div
                                 className="w-10 h-10 rounded-md bg-cover bg-center shrink-0 border border-stone-200"
                                 style={{ backgroundImage: `url(${img.url})` }}
                               />
-                              <span className="font-medium text-stone-800 text-[11px]">{img.name}</span>
+                              <span className="font-medium text-stone-800 text-[11px]">
+                                {img.name}
+                              </span>
                             </button>
                           ))}
                         </div>
@@ -471,9 +515,16 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                       {/* Readability Overlay Slider */}
                       <div className="pt-2 border-t border-stone-200 space-y-1.5">
                         <div className="flex justify-between items-center text-[11px]">
-                          <span className="font-semibold text-stone-700">Light Overlay Tint</span>
+                          <span className="font-semibold text-stone-700">
+                            Light Overlay Tint
+                          </span>
                           <span className="text-stone-500 font-mono">
-                            {Math.round((secBg.overlayOpacity !== undefined ? secBg.overlayOpacity : 0.85) * 100)}%
+                            {Math.round(
+                              (secBg.overlayOpacity !== undefined
+                                ? secBg.overlayOpacity
+                                : 0.85) * 100,
+                            )}
+                            %
                           </span>
                         </div>
                         <input
@@ -481,21 +532,32 @@ export default function SectionsPanel({ data, update, initialActiveSec = null })
                           min="0.1"
                           max="0.95"
                           step="0.05"
-                          value={secBg.overlayOpacity !== undefined ? secBg.overlayOpacity : 0.85}
-                          onChange={(e) => updateSecBg(secId, { overlayOpacity: parseFloat(e.target.value) })}
+                          value={
+                            secBg.overlayOpacity !== undefined
+                              ? secBg.overlayOpacity
+                              : 0.85
+                          }
+                          onChange={(e) =>
+                            updateSecBg(secId, {
+                              overlayOpacity: parseFloat(e.target.value),
+                            })
+                          }
                           className="w-full accent-amber-800 cursor-pointer"
                         />
                         <p className="text-[10px] text-stone-500 leading-tight">
-                          Higher overlay ensures names, invitations, and dates stay clear & readable over the photo.
+                          Higher overlay ensures names, invitations, and dates
+                          stay clear & readable over the photo.
                         </p>
                       </div>
                     </div>
                   )}
 
                   {/* Mode 4: Default */}
-                  {(!secBg.type || secBg.type === 'default') && (
+                  {(!secBg.type || secBg.type === "default") && (
                     <p className="text-stone-500 text-[11px] italic">
-                      Using the royal ivory and gold foil theme background. Select Solid Color, Gradient, or Image URL above to customize.
+                      Using the royal ivory and gold foil theme background.
+                      Select Solid Color, Gradient, or Image URL above to
+                      customize.
                     </p>
                   )}
                 </div>

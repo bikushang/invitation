@@ -1,9 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-export default function ParticlesEffect({ type = 'petals', color = '#d4af37', density = 'medium' }) {
-  if (type === 'none') return null;
+export default function ParticlesEffect({
+  type = "petals",
+  color = "#d4af37",
+  density = "medium",
+}) {
+  if (type === "none") return null;
 
-  const count = density === 'low' ? 12 : density === 'high' ? 32 : 20;
+  const count = density === "low" ? 12 : density === "high" ? 32 : 20;
 
   const particles = useMemo(() => {
     return Array.from({ length: count }).map((_, i) => ({
@@ -11,7 +15,7 @@ export default function ParticlesEffect({ type = 'petals', color = '#d4af37', de
       left: (i * 5.17 + 3) % 96,
       delay: (i * 1.3) % 12,
       duration: 8 + (i % 6) * 2.5,
-      size: type === 'sparkles' ? 4 + (i % 4) * 3 : 12 + (i % 5) * 4,
+      size: type === "sparkles" ? 4 + (i % 4) * 3 : 12 + (i % 5) * 4,
       rotation: (i * 37) % 360,
     }));
   }, [count, type]);
@@ -21,7 +25,7 @@ export default function ParticlesEffect({ type = 'petals', color = '#d4af37', de
       {particles.map((p) => {
         let content = null;
 
-        if (type === 'petals') {
+        if (type === "petals") {
           // Rose petal SVG shape
           content = (
             <svg
@@ -32,12 +36,12 @@ export default function ParticlesEffect({ type = 'petals', color = '#d4af37', de
             >
               <path
                 d="M15,0 C22,6 28,14 24,23 C20,30 9,30 5,22 C1,14 8,6 15,0 Z"
-                fill={p.id % 2 === 0 ? '#b83b4f' : color}
+                fill={p.id % 2 === 0 ? "#b83b4f" : color}
                 opacity={0.65}
               />
             </svg>
           );
-        } else if (type === 'marigold') {
+        } else if (type === "marigold") {
           // Marigold / Genda petal
           content = (
             <svg
@@ -51,12 +55,12 @@ export default function ParticlesEffect({ type = 'petals', color = '#d4af37', de
                 cy="12"
                 rx="6"
                 ry="11"
-                fill={p.id % 2 === 0 ? '#ea7a1e' : '#f5b027'}
+                fill={p.id % 2 === 0 ? "#ea7a1e" : "#f5b027"}
                 opacity={0.7}
               />
             </svg>
           );
-        } else if (type === 'hearts') {
+        } else if (type === "hearts") {
           // Heart shape
           content = (
             <svg
@@ -91,7 +95,7 @@ export default function ParticlesEffect({ type = 'petals', color = '#d4af37', de
             className="particle-falling absolute pointer-events-none"
             style={{
               left: `${p.left}%`,
-              top: '-8%',
+              top: "-8%",
               animationDelay: `${p.delay}s`,
               animationDuration: `${p.duration}s`,
             }}

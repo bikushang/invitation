@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 /**
  * A contenteditable span whose text is controlled by `value`.
@@ -10,9 +10,9 @@ export default function EditableText({
   value,
   onChange,
   multiline = false,
-  className = '',
+  className = "",
   style,
-  as: Tag = 'span',
+  as: Tag = "span",
 }) {
   const ref = useRef(null);
   const [focused, setFocused] = useState(false);
@@ -35,7 +35,7 @@ export default function EditableText({
   }
 
   function handleKeyDown(e) {
-    if (e.key === 'Enter' && !multiline) {
+    if (e.key === "Enter" && !multiline) {
       e.preventDefault();
       e.currentTarget.blur();
     }
@@ -43,8 +43,8 @@ export default function EditableText({
 
   function handlePaste(e) {
     e.preventDefault();
-    const text = (e.clipboardData || window.clipboardData).getData('text');
-    document.execCommand('insertText', false, text);
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    document.execCommand("insertText", false, text);
   }
 
   return (

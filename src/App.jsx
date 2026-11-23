@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect } from "react";
 import {
   Eye,
   Palette,
@@ -23,19 +23,19 @@ import {
   Image,
   Wand2,
   Crown,
-} from 'lucide-react';
-import InvitationPreview from './components/InvitationPreview';
-import ThemePanel from './components/panels/ThemePanel';
-import ContentPanel from './components/panels/ContentPanel';
-import AnimationPanel from './components/panels/AnimationPanel';
-import SectionsPanel from './components/panels/SectionsPanel';
-import IntroPanel from './components/panels/IntroPanel';
-import CaricatureStudioPanel from './components/panels/CaricatureStudioPanel';
-import AiToolsPanel from './components/panels/AiToolsPanel';
-import AdminDashboardModal from './components/panels/AdminDashboardModal';
-import { DEFAULT_INVITATION } from './lib/defaultData';
-import { CULTURAL_TRADITIONS } from './lib/culturalPresets';
-import { useScrollReveal, resetAllReveals } from './hooks/useScrollReveal';
+} from "lucide-react";
+import InvitationPreview from "./components/InvitationPreview";
+import ThemePanel from "./components/panels/ThemePanel";
+import ContentPanel from "./components/panels/ContentPanel";
+import AnimationPanel from "./components/panels/AnimationPanel";
+import SectionsPanel from "./components/panels/SectionsPanel";
+import IntroPanel from "./components/panels/IntroPanel";
+import CaricatureStudioPanel from "./components/panels/CaricatureStudioPanel";
+import AiToolsPanel from "./components/panels/AiToolsPanel";
+import AdminDashboardModal from "./components/panels/AdminDashboardModal";
+import { DEFAULT_INVITATION } from "./lib/defaultData";
+import { CULTURAL_TRADITIONS } from "./lib/culturalPresets";
+import { useScrollReveal, resetAllReveals } from "./hooks/useScrollReveal";
 import {
   saveInvitation,
   loadCurrentDraft,
@@ -45,24 +45,26 @@ import {
   getRsvpResponses,
   exportInvitationJson,
   sanitizeInvitationData,
-} from './lib/storage';
+} from "./lib/storage";
 
 const TABS = [
-  { id: 'tradition', label: 'Traditions', icon: Crown },
-  { id: 'content', label: 'Content', icon: Type },
-  { id: 'caricature', label: 'Caricature', icon: Image },
-  { id: 'ai-tools', label: 'AI Tools', icon: Wand2 },
-  { id: 'intro', label: 'Cover & Seal', icon: Mail },
-  { id: 'theme', label: 'Theme & Font', icon: Palette },
-  { id: 'sections', label: 'Layout & Drag', icon: Layers },
+  { id: "tradition", label: "Traditions", icon: Crown },
+  { id: "content", label: "Content", icon: Type },
+  { id: "caricature", label: "Caricature", icon: Image },
+  { id: "ai-tools", label: "AI Tools", icon: Wand2 },
+  { id: "intro", label: "Cover & Seal", icon: Mail },
+  { id: "theme", label: "Theme & Font", icon: Palette },
+  { id: "sections", label: "Layout & Drag", icon: Layers },
 ];
 
 export default function App() {
-  const [data, setData] = useState(() => sanitizeInvitationData(loadCurrentDraft()));
-  const [tab, setTab] = useState('tradition');
+  const [data, setData] = useState(() =>
+    sanitizeInvitationData(loadCurrentDraft()),
+  );
+  const [tab, setTab] = useState("tradition");
   const [revealKey, setRevealKey] = useState(0);
   const [saved, setSaved] = useState(null);
-  const [toast, setToast] = useState('');
+  const [toast, setToast] = useState("");
 
   // Cover Page State: whether the envelope/cover is open or closed
   const [coverOpen, setCoverOpen] = useState(false);
@@ -71,8 +73,8 @@ export default function App() {
   const [activeBgSec, setActiveBgSec] = useState(null);
 
   // Viewport mode: 'mobile' vs 'desktop'
-  const [canvasViewMode, setCanvasViewMode] = useState('mobile');
-  const [fullPreviewViewMode, setFullPreviewViewMode] = useState('desktop');
+  const [canvasViewMode, setCanvasViewMode] = useState("mobile");
+  const [fullPreviewViewMode, setFullPreviewViewMode] = useState("desktop");
 
   // Modals
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -92,20 +94,20 @@ export default function App() {
 
   const showToast = (msg) => {
     setToast(msg);
-    setTimeout(() => setToast(''), 3000);
+    setTimeout(() => setToast(""), 3000);
   };
 
   const update = useCallback((key, value) => {
     setData((prev) => ({
       ...prev,
-      [key]: typeof value === 'function' ? value(prev[key]) : value,
+      [key]: typeof value === "function" ? value(prev[key]) : value,
     }));
   }, []);
 
   const themeUpdate = useCallback((key, value) => {
     setData((prev) => ({
       ...prev,
-      [key]: typeof value === 'function' ? value(prev[key]) : value,
+      [key]: typeof value === "function" ? value(prev[key]) : value,
     }));
   }, []);
 
@@ -118,22 +120,27 @@ export default function App() {
     const newVisibility = {};
 
     (tradition.events || []).forEach((ev, idx) => {
-      const cleanName = (ev.name || 'ceremony').toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 15);
+      const cleanName = (ev.name || "ceremony")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "_")
+        .slice(0, 15);
       const key = `event_${cleanName}_${idx}`;
       newSeparateEvents[key] = {
         name: ev.name,
-        badge: ev.badge || ev.name?.split(' ')[0] || 'Ceremony',
-        motif: ev.motif || '✦ SACRED CELEBRATION ✦',
-        subtitle: ev.subtitle || '',
-        date: ev.date || '',
-        time: ev.time || '',
-        venueLabel: ev.venueLabel || 'Venue',
-        venue: ev.venue || '',
-        location: ev.location || '',
-        dressCode: ev.dressCode || 'Attire: Traditional Festive Wear',
-        accent: ev.accent || tradition.theme?.accent || '#b8860b',
-        bgTint: ev.bgTint || 'linear-gradient(180deg, #fffcf5 0%, #fff9e8 50%, #fff3d6 100%)',
-        cardBorder: ev.cardBorder || tradition.theme?.primary || '#d4af37',
+        badge: ev.badge || ev.name?.split(" ")[0] || "Ceremony",
+        motif: ev.motif || "✦ SACRED CELEBRATION ✦",
+        subtitle: ev.subtitle || "",
+        date: ev.date || "",
+        time: ev.time || "",
+        venueLabel: ev.venueLabel || "Venue",
+        venue: ev.venue || "",
+        location: ev.location || "",
+        dressCode: ev.dressCode || "Attire: Traditional Festive Wear",
+        accent: ev.accent || tradition.theme?.accent || "#b8860b",
+        bgTint:
+          ev.bgTint ||
+          "linear-gradient(180deg, #fffcf5 0%, #fff9e8 50%, #fff3d6 100%)",
+        cardBorder: ev.cardBorder || tradition.theme?.primary || "#d4af37",
       };
       newEventKeys.push(key);
       newVisibility[key] = true;
@@ -141,10 +148,10 @@ export default function App() {
 
     setData((prev) => {
       // Rebuild sectionsOrder with new event keys placed cleanly right after 'families'
-      const baseSections = (prev.sectionsOrder || DEFAULT_INVITATION.sectionsOrder).filter(
-        (s) => !s.startsWith('event_') && s !== 'schedule'
-      );
-      const famIdx = baseSections.indexOf('families');
+      const baseSections = (
+        prev.sectionsOrder || DEFAULT_INVITATION.sectionsOrder
+      ).filter((s) => !s.startsWith("event_") && s !== "schedule");
+      const famIdx = baseSections.indexOf("families");
       if (famIdx !== -1) {
         baseSections.splice(famIdx + 1, 0, ...newEventKeys);
       } else {
@@ -163,7 +170,8 @@ export default function App() {
         // 2. Hero Section - Sacred Invocations & Sanskrit/Gurbani/Arabic/Scripture
         hero: {
           ...prev.hero,
-          auspiciousSymbol: tradition.hero?.auspiciousSymbol || prev.hero?.auspiciousSymbol,
+          auspiciousSymbol:
+            tradition.hero?.auspiciousSymbol || prev.hero?.auspiciousSymbol,
           symbolText: tradition.hero?.symbolText || prev.hero?.symbolText,
           subtitle: tradition.hero?.subtitle || prev.hero?.subtitle,
           closingLine: tradition.hero?.closingLine || prev.hero?.closingLine,
@@ -175,13 +183,16 @@ export default function App() {
           heading: tradition.families?.heading || prev.families?.heading,
           groom: {
             ...prev.families?.groom,
-            label: tradition.families?.groomLabel || prev.families?.groom?.label,
+            label:
+              tradition.families?.groomLabel || prev.families?.groom?.label,
           },
           bride: {
             ...prev.families?.bride,
-            label: tradition.families?.brideLabel || prev.families?.bride?.label,
+            label:
+              tradition.families?.brideLabel || prev.families?.bride?.label,
           },
-          closingLine: tradition.families?.closingLine || prev.families?.closingLine,
+          closingLine:
+            tradition.families?.closingLine || prev.families?.closingLine,
         },
         // 4. Countdown Section - Tradition-specific Heading
         countdown: {
@@ -217,7 +228,9 @@ export default function App() {
     // Reset cover to closed so user immediately sees the transformed cover & wax seal
     setCoverOpen(false);
     setRevealKey((k) => k + 1);
-    showToast(`Applied ${tradition.name} tradition! Transformed cover, symbols, ceremonies & colors.`);
+    showToast(
+      `Applied ${tradition.name} tradition! Transformed cover, symbols, ceremonies & colors.`,
+    );
   }
 
   // Replay: ALWAYS close the cover page and replay animations
@@ -225,7 +238,7 @@ export default function App() {
     setCoverOpen(false);
     resetAllReveals();
     setRevealKey((k) => k + 1);
-    showToast('Cover envelope closed · Click Open to view');
+    showToast("Cover envelope closed · Click Open to view");
   }
 
   // Save to LocalStorage
@@ -233,19 +246,23 @@ export default function App() {
     try {
       const res = saveInvitation(data, saved?.id || saved?.slug);
       setSaved(res);
-      showToast('Invitation saved to Local Storage!');
+      showToast("Invitation saved to Local Storage!");
     } catch (e) {
-      alert('Could not save: ' + e.message);
+      alert("Could not save: " + e.message);
     }
   }
 
   // New clean invitation
   function handleNew() {
-    if (window.confirm('Start a new invitation from default template? Current draft will be reset.')) {
+    if (
+      window.confirm(
+        "Start a new invitation from default template? Current draft will be reset.",
+      )
+    ) {
       setData(DEFAULT_INVITATION);
       setSaved(null);
       setCoverOpen(false);
-      showToast('New invitation started');
+      showToast("New invitation started");
     }
   }
 
@@ -266,17 +283,17 @@ export default function App() {
 
   // Delete saved invitation
   function handleDeleteSaved(id) {
-    if (window.confirm('Delete this saved invitation?')) {
+    if (window.confirm("Delete this saved invitation?")) {
       deleteSavedInvitation(id);
       setSavedList(getAllSavedInvitations());
       if (saved?.id === id) setSaved(null);
-      showToast('Invitation deleted');
+      showToast("Invitation deleted");
     }
   }
 
   // Open Admin Dashboard & RSVPs
   function openAdmin() {
-    const list = getRsvpResponses(saved?.slug || 'default');
+    const list = getRsvpResponses(saved?.slug || "default");
     setRsvpList(list);
     setAdminModalOpen(true);
   }
@@ -291,17 +308,17 @@ export default function App() {
         const parsed = JSON.parse(event.target.result);
         setData(sanitizeInvitationData(parsed));
         setCoverOpen(false);
-        showToast('Invitation imported successfully!');
+        showToast("Invitation imported successfully!");
       } catch (err) {
-        alert('Invalid JSON file format.');
+        alert("Invalid JSON file format.");
       }
     };
     reader.readAsText(file);
-    e.target.value = '';
+    e.target.value = "";
   }
 
   const shareUrl = useMemo(() => {
-    const slug = saved?.slug || 'preview';
+    const slug = saved?.slug || "preview";
     return `${window.location.origin}${window.location.pathname}?invite=${slug}`;
   }, [saved]);
 
@@ -363,8 +380,8 @@ export default function App() {
                 onClick={() => setTab(t.id)}
                 className={`flex flex-1 min-w-[55px] flex-col items-center justify-center gap-1 py-2 text-[10px] font-medium transition cursor-pointer ${
                   active
-                    ? 'border-b-2 border-amber-800 text-amber-900 bg-white font-bold'
-                    : 'text-stone-500 hover:text-stone-800'
+                    ? "border-b-2 border-amber-800 text-amber-900 bg-white font-bold"
+                    : "text-stone-500 hover:text-stone-800"
                 }`}
               >
                 <Icon size={14} />
@@ -376,7 +393,7 @@ export default function App() {
 
         {/* Tab Panels */}
         <div className="builder-scroll flex-1 overflow-y-auto px-5 py-5 text-stone-800 bg-white">
-          {tab === 'tradition' && (
+          {tab === "tradition" && (
             <div className="space-y-4">
               <div className="rounded-xl p-3.5 bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-1">
                 <p className="font-bold flex items-center gap-1.5">
@@ -384,13 +401,18 @@ export default function App() {
                   <span>Choose Wedding Cultural Tradition</span>
                 </p>
                 <p className="text-[11px] text-amber-900/80 leading-relaxed">
-                  1-click transforms the card into your traditional cultural style with authentic sacred invocations, event sequences, and regional customs.
+                  1-click transforms the card into your traditional cultural
+                  style with authentic sacred invocations, event sequences, and
+                  regional customs.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 gap-2.5">
                 {CULTURAL_TRADITIONS.map((trad) => {
-                  const symbol = trad.hero?.auspiciousSymbol || trad.intro?.waxSealText || '✦';
+                  const symbol =
+                    trad.hero?.auspiciousSymbol ||
+                    trad.intro?.waxSealText ||
+                    "✦";
                   const isCurrent = data.hero?.auspiciousSymbol === symbol;
                   return (
                     <button
@@ -399,8 +421,8 @@ export default function App() {
                       onClick={() => applyTradition(trad)}
                       className={`p-3.5 rounded-xl border text-left transition hover:shadow-md group cursor-pointer ${
                         isCurrent
-                          ? 'border-amber-700 bg-amber-50/60 ring-2 ring-amber-600/30 shadow-xs'
-                          : 'border-stone-200 hover:border-amber-700 bg-white'
+                          ? "border-amber-700 bg-amber-50/60 ring-2 ring-amber-600/30 shadow-xs"
+                          : "border-stone-200 hover:border-amber-700 bg-white"
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -416,11 +438,16 @@ export default function App() {
                           {symbol}
                         </span>
                       </div>
-                      <p className="text-[11px] text-stone-500 mt-0.5">{trad.subtitle}</p>
+                      <p className="text-[11px] text-stone-500 mt-0.5">
+                        {trad.subtitle}
+                      </p>
                       <div className="mt-2.5 flex flex-wrap gap-1">
                         {trad.events.slice(0, 3).map((e) => (
-                          <span key={e.name} className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] text-stone-600">
-                            {e.name.split(' ')[0]}
+                          <span
+                            key={e.name}
+                            className="px-1.5 py-0.5 rounded bg-stone-100 text-[10px] text-stone-600"
+                          >
+                            {e.name.split(" ")[0]}
                           </span>
                         ))}
                         <span className="px-1.5 py-0.5 rounded bg-amber-50 text-[10px] text-amber-900 font-medium">
@@ -433,12 +460,22 @@ export default function App() {
               </div>
             </div>
           )}
-          {tab === 'content' && <ContentPanel data={data} update={update} />}
-          {tab === 'caricature' && <CaricatureStudioPanel data={data} update={update} />}
-          {tab === 'ai-tools' && <AiToolsPanel data={data} update={update} onToast={showToast} />}
-          {tab === 'intro' && <IntroPanel data={data} update={update} onReplayIntro={handleReplay} />}
-          {tab === 'theme' && <ThemePanel data={data} update={themeUpdate} />}
-          {tab === 'sections' && (
+          {tab === "content" && <ContentPanel data={data} update={update} />}
+          {tab === "caricature" && (
+            <CaricatureStudioPanel data={data} update={update} />
+          )}
+          {tab === "ai-tools" && (
+            <AiToolsPanel data={data} update={update} onToast={showToast} />
+          )}
+          {tab === "intro" && (
+            <IntroPanel
+              data={data}
+              update={update}
+              onReplayIntro={handleReplay}
+            />
+          )}
+          {tab === "theme" && <ThemePanel data={data} update={themeUpdate} />}
+          {tab === "sections" && (
             <SectionsPanel
               data={data}
               update={update}
@@ -455,7 +492,7 @@ export default function App() {
               className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-amber-800 px-3 py-2 text-xs font-semibold text-white hover:bg-amber-900 transition shadow-sm cursor-pointer"
             >
               <Save size={14} />
-              <span>{saved ? 'Update in Storage' : 'Save Locally'}</span>
+              <span>{saved ? "Update in Storage" : "Save Locally"}</span>
             </button>
             <button
               onClick={() => {
@@ -489,7 +526,12 @@ export default function App() {
               title="Import JSON"
             >
               <Upload size={15} />
-              <input type="file" accept=".json" onChange={handleImportJson} className="hidden" />
+              <input
+                type="file"
+                accept=".json"
+                onChange={handleImportJson}
+                className="hidden"
+              />
             </label>
           </div>
         </footer>
@@ -502,11 +544,11 @@ export default function App() {
           {/* Viewport Switcher */}
           <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-lg border border-stone-300">
             <button
-              onClick={() => setCanvasViewMode('mobile')}
+              onClick={() => setCanvasViewMode("mobile")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer ${
-                canvasViewMode === 'mobile'
-                  ? 'bg-white text-amber-900 font-semibold shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                canvasViewMode === "mobile"
+                  ? "bg-white text-amber-900 font-semibold shadow-xs"
+                  : "text-stone-600 hover:text-stone-900"
               }`}
               title="Mobile Screen View"
             >
@@ -514,11 +556,11 @@ export default function App() {
               <span>Mobile View</span>
             </button>
             <button
-              onClick={() => setCanvasViewMode('desktop')}
+              onClick={() => setCanvasViewMode("desktop")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer ${
-                canvasViewMode === 'desktop'
-                  ? 'bg-white text-amber-900 font-semibold shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                canvasViewMode === "desktop"
+                  ? "bg-white text-amber-900 font-semibold shadow-xs"
+                  : "text-stone-600 hover:text-stone-900"
               }`}
               title="Desktop Wide Screen View"
             >
@@ -532,17 +574,21 @@ export default function App() {
             <button
               onClick={() => {
                 setCoverOpen(!coverOpen);
-                showToast(!coverOpen ? 'Opened Card' : 'Cover Envelope Closed');
+                showToast(!coverOpen ? "Opened Card" : "Cover Envelope Closed");
               }}
               className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition cursor-pointer ${
                 !coverOpen
-                  ? 'bg-amber-100 border-amber-300 text-amber-900 font-semibold'
-                  : 'border-stone-300 bg-white text-stone-700 hover:bg-stone-50'
+                  ? "bg-amber-100 border-amber-300 text-amber-900 font-semibold"
+                  : "border-stone-300 bg-white text-stone-700 hover:bg-stone-50"
               }`}
               title="Toggle Cover on/off"
             >
-              {!coverOpen ? <Mail size={13} className="text-amber-800" /> : <MailOpen size={13} />}
-              <span>{!coverOpen ? 'Cover: Active' : 'Open Card'}</span>
+              {!coverOpen ? (
+                <Mail size={13} className="text-amber-800" />
+              ) : (
+                <MailOpen size={13} />
+              )}
+              <span>{!coverOpen ? "Cover: Active" : "Open Card"}</span>
             </button>
 
             {/* Replay ALWAYS closes the cover page and restarts */}
@@ -567,7 +613,7 @@ export default function App() {
 
         {/* Canvas Container: Fixed Phone Size with Internal Scroll for Mobile View! */}
         <div className="builder-scroll flex-1 overflow-y-auto py-6 sm:py-8 px-2 sm:px-6 flex justify-center items-start">
-          {canvasViewMode === 'mobile' ? (
+          {canvasViewMode === "mobile" ? (
             /* REALISTIC SMARTPHONE BEZEL WITH INTERNAL SCROLLING */
             <div className="w-[375px] max-w-[95vw] h-[720px] max-h-[calc(100vh-140px)] phone-bezel relative flex flex-col shadow-2xl shrink-0 bg-[#fdfbf7]">
               {/* Camera Notch / Speaker Bar */}
@@ -588,7 +634,7 @@ export default function App() {
                   onCoverOpenChange={setCoverOpen}
                   isMobile={true}
                   onCustomizeSectionBg={(secKey) => {
-                    setTab('sections');
+                    setTab("sections");
                     setActiveBgSec(secKey);
                   }}
                 />
@@ -611,7 +657,7 @@ export default function App() {
                 onCoverOpenChange={setCoverOpen}
                 isMobile={false}
                 onCustomizeSectionBg={(secKey) => {
-                  setTab('sections');
+                  setTab("sections");
                   setActiveBgSec(secKey);
                 }}
               />
@@ -631,22 +677,22 @@ export default function App() {
               </span>
               <div className="flex items-center gap-1 bg-stone-900 p-1 rounded-lg border border-stone-800">
                 <button
-                  onClick={() => setFullPreviewViewMode('mobile')}
+                  onClick={() => setFullPreviewViewMode("mobile")}
                   className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer ${
-                    fullPreviewViewMode === 'mobile'
-                      ? 'bg-amber-600 text-white font-semibold'
-                      : 'text-stone-400 hover:text-stone-200'
+                    fullPreviewViewMode === "mobile"
+                      ? "bg-amber-600 text-white font-semibold"
+                      : "text-stone-400 hover:text-stone-200"
                   }`}
                 >
                   <Smartphone size={13} />
                   <span>Mobile</span>
                 </button>
                 <button
-                  onClick={() => setFullPreviewViewMode('desktop')}
+                  onClick={() => setFullPreviewViewMode("desktop")}
                   className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition cursor-pointer ${
-                    fullPreviewViewMode === 'desktop'
-                      ? 'bg-amber-600 text-white font-semibold'
-                      : 'text-stone-400 hover:text-stone-200'
+                    fullPreviewViewMode === "desktop"
+                      ? "bg-amber-600 text-white font-semibold"
+                      : "text-stone-400 hover:text-stone-200"
                   }`}
                 >
                   <Monitor size={13} />
@@ -675,7 +721,7 @@ export default function App() {
 
           {/* Full Preview Body */}
           <div className="builder-scroll flex-1 overflow-y-auto py-6 sm:py-8 px-2 sm:px-6 flex justify-center items-start">
-            {fullPreviewViewMode === 'mobile' ? (
+            {fullPreviewViewMode === "mobile" ? (
               <div className="w-[375px] max-w-[95vw] h-[720px] max-h-[calc(100vh-140px)] phone-bezel relative flex flex-col shadow-2xl shrink-0 bg-[#fdfbf7]">
                 <div className="h-6 bg-[#292524] flex items-center justify-center shrink-0">
                   <div className="w-24 h-3.5 bg-black rounded-full flex items-center justify-end px-2">
@@ -731,12 +777,17 @@ export default function App() {
                 <Share2 size={18} className="text-amber-800" />
                 <span>Share Your Invitation</span>
               </h3>
-              <button onClick={() => setShareOpen(false)} className="text-stone-400 hover:text-stone-700 cursor-pointer">
+              <button
+                onClick={() => setShareOpen(false)}
+                className="text-stone-400 hover:text-stone-700 cursor-pointer"
+              >
                 <X size={18} />
               </button>
             </div>
             <p className="mt-2 text-xs text-stone-600 leading-relaxed">
-              Anyone with this link will experience your custom wedding invitation with the opening envelope animation, music & interactive RSVP!
+              Anyone with this link will experience your custom wedding
+              invitation with the opening envelope animation, music &
+              interactive RSVP!
             </p>
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2">
               <input
@@ -747,7 +798,7 @@ export default function App() {
               <button
                 onClick={() => {
                   navigator.clipboard?.writeText(shareUrl);
-                  showToast('Share link copied to clipboard!');
+                  showToast("Share link copied to clipboard!");
                 }}
                 className="flex items-center gap-1 rounded bg-amber-800 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-900 transition cursor-pointer"
               >
@@ -757,7 +808,7 @@ export default function App() {
             </div>
             <div className="mt-4 flex justify-end">
               <button
-                onClick={() => window.open(shareUrl, '_blank')}
+                onClick={() => window.open(shareUrl, "_blank")}
                 className="text-xs text-amber-800 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
               >
                 Open in new tab ↗
@@ -780,7 +831,9 @@ export default function App() {
             <div className="flex items-center justify-between border-b border-stone-200 pb-3">
               <div className="flex items-center gap-2">
                 <FolderOpen size={18} className="text-amber-800" />
-                <h3 className="text-base font-bold text-stone-900">Saved Invitations</h3>
+                <h3 className="text-base font-bold text-stone-900">
+                  Saved Invitations
+                </h3>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -789,7 +842,10 @@ export default function App() {
                 >
                   + New
                 </button>
-                <button onClick={() => setSavedListOpen(false)} className="text-stone-400 hover:text-stone-700 cursor-pointer">
+                <button
+                  onClick={() => setSavedListOpen(false)}
+                  className="text-stone-400 hover:text-stone-700 cursor-pointer"
+                >
                   <X size={18} />
                 </button>
               </div>
@@ -798,7 +854,8 @@ export default function App() {
             <div className="mt-4 max-h-[340px] overflow-y-auto space-y-2 builder-scroll">
               {savedList.length === 0 ? (
                 <div className="py-8 text-center text-xs text-stone-500">
-                  No saved invitations yet in local storage. Click "Save Locally" to save your current draft.
+                  No saved invitations yet in local storage. Click "Save
+                  Locally" to save your current draft.
                 </div>
               ) : (
                 savedList.map((item) => (
@@ -807,9 +864,12 @@ export default function App() {
                     className="flex items-center justify-between p-3 rounded-lg border border-stone-200 bg-stone-50 hover:border-stone-300 transition"
                   >
                     <div>
-                      <h4 className="text-sm font-semibold text-stone-900">{item.name}</h4>
+                      <h4 className="text-sm font-semibold text-stone-900">
+                        {item.name}
+                      </h4>
                       <p className="text-[11px] text-stone-500">
-                        Updated: {new Date(item.updatedAt).toLocaleDateString()} · Slug: {item.slug}
+                        Updated: {new Date(item.updatedAt).toLocaleDateString()}{" "}
+                        · Slug: {item.slug}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -840,7 +900,7 @@ export default function App() {
         isOpen={adminModalOpen}
         onClose={() => setAdminModalOpen(false)}
         rsvpList={rsvpList}
-        slug={saved?.slug || 'wedding'}
+        slug={saved?.slug || "wedding"}
         onToast={showToast}
       />
     </div>

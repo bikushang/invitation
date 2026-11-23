@@ -12,12 +12,15 @@
 .font-cinzel {
   font-family: 'Cinzel', serif;
 }
+
 .font-serif-royal {
   font-family: 'Cormorant Garamond', serif;
 }
+
 .font-script-royal {
   font-family: 'Cinzel', 'Cormorant Garamond', serif;
 }
+
 .font-calligraphy {
   font-family: 'Cinzel', 'Cormorant Garamond', serif;
   letter-spacing: 0.05em;
@@ -42,13 +45,16 @@ body {
   width: 6px;
   height: 6px;
 }
+
 .builder-scroll::-webkit-scrollbar-thumb {
   background: rgba(184, 134, 11, 0.25);
   border-radius: 99px;
 }
+
 .builder-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(184, 134, 11, 0.45);
 }
+
 .builder-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -62,10 +68,12 @@ body {
   display: inline-block;
   min-width: 1ch;
 }
+
 .editable-text:hover {
   background: rgba(184, 134, 11, 0.1);
   box-shadow: 0 0 0 1px rgba(184, 134, 11, 0.45);
 }
+
 .editable-text:focus {
   background: rgba(184, 134, 11, 0.15);
   box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.75);
@@ -96,6 +104,7 @@ body {
   border-radius: 28px;
   box-shadow: 0 15px 40px -10px rgba(74, 21, 37, 0.12), 0 0 0 1px rgba(184, 134, 11, 0.18);
 }
+
 .farman-card::before {
   content: '';
   position: absolute;
@@ -107,14 +116,12 @@ body {
 
 /* Gold Foil Text Gradient */
 .gold-foil-text {
-  background: linear-gradient(
-    135deg,
-    #996515 0%,
-    #d4af37 25%,
-    #f3e5ab 50%,
-    #b8860b 75%,
-    #8a5a00 100%
-  );
+  background: linear-gradient(135deg,
+      #996515 0%,
+      #d4af37 25%,
+      #f3e5ab 50%,
+      #b8860b 75%,
+      #8a5a00 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
@@ -134,6 +141,7 @@ body {
   border: 1px solid rgba(184, 134, 11, 0.45);
   position: relative;
 }
+
 .gold-frame::after {
   content: '';
   position: absolute;
@@ -156,11 +164,13 @@ body {
     opacity: 0.4;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .section-enter {
   animation: sectionEnter 0.45s ease-out both;
 }
@@ -169,10 +179,14 @@ body {
 [data-anim='float'] {
   animation: floatY 6s ease-in-out infinite;
 }
+
 @keyframes floatY {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -183,19 +197,19 @@ body {
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
 }
+
 .anim-shimmer {
-  background: linear-gradient(
-    90deg,
-    #8a5a00 0%,
-    #d4af37 25%,
-    #fff3c4 50%,
-    #d4af37 75%,
-    #8a5a00 100%
-  );
+  background: linear-gradient(90deg,
+      #8a5a00 0%,
+      #d4af37 25%,
+      #fff3c4 50%,
+      #d4af37 75%,
+      #8a5a00 100%);
   background-size: 200% auto;
   color: transparent !important;
   -webkit-background-clip: text;
@@ -211,6 +225,7 @@ body {
   opacity: 0.8;
   color: currentColor;
 }
+
 @keyframes blink {
   50% {
     opacity: 0;
@@ -219,15 +234,19 @@ body {
 
 /* Wax Seal Pulse Glow */
 @keyframes sealGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 4px 20px rgba(184, 134, 11, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.15);
     transform: scale(1);
   }
+
   50% {
     box-shadow: 0 8px 30px rgba(184, 134, 11, 0.7), inset 0 0 14px rgba(0, 0, 0, 0.2);
     transform: scale(1.04);
   }
 }
+
 .seal-pulse {
   animation: sealGlow 2.5s ease-in-out infinite;
 }
@@ -238,17 +257,21 @@ body {
     transform: translateY(-8%) rotate(0deg) translateX(0);
     opacity: 0;
   }
+
   15% {
     opacity: 0.85;
   }
+
   85% {
     opacity: 0.8;
   }
+
   100% {
     transform: translateY(115vh) rotate(380deg) translateX(25px);
     opacity: 0;
   }
 }
+
 .particle-falling {
   animation: particleFall linear infinite;
 }
